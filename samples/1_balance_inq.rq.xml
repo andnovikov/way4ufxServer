@@ -1,0 +1,37 @@
+<UFXMsg direction="Rq" msg_type="Doc" scheme="WAY4Doc" version="2.0">
+	<MsgId>AAA-555-333-EEE-23124141</MsgId>
+	<Source app="Bank1"/>
+	<MsgData>
+		<Doc>
+			<TransType>
+				<TransCode>
+					<MsgCode>01000B</MsgCode>
+				</TransCode>
+			</TransType>
+			<DocRefSet>
+				<Parm>
+					<ParmCode>RRN</ParmCode>
+					<Value>119481044004</Value>
+				</Parm>
+			</DocRefSet>
+			<Description>99999999</Description>
+			<Requestor>
+				<ContractNumber>6762820340422944</ContractNumber>
+			</Requestor>
+			<Source>
+				<ContractNumber>99999998</ContractNumber>
+   					<InstInfo>
+ 				                <InstitutionIdType>BIN</InstitutionIdType>
+						<Institution>0001</Institution>
+					</InstInfo>
+
+			</Source>
+			<ResultDtls>
+				<Parm>
+					<ParmCode>Balance</ParmCode>
+					<Value>Y</Value>
+				</Parm>
+			</ResultDtls>
+		</Doc>
+	</MsgData>
+</UFXMsg>

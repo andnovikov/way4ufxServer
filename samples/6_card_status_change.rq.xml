@@ -1,0 +1,29 @@
+<UFXMsg direction="Rq" msg_type="Application" scheme="WAY4Appl" version="2.0">
+	<MsgId>AAA-555-333-EEE-23124141</MsgId>
+	<Source app="Bank1"/>
+	<MsgData>
+		<Application>
+			<RegNumber>AA_XML_03_041</RegNumber>
+			<Institution>0246</Institution>
+			<OrderDprt>1234</OrderDprt>
+			<ObjectType>Status</ObjectType>
+			<ActionType>Update</ActionType>
+			<ObjectFor>
+				<ContractIDT>
+					<ContractNumber>6762820340422944</ContractNumber>
+              <Client>
+                        <ClientInfo>
+                                    <ShortName>TEST_UFX</ShortName>
+                        </ClientInfo>
+              </Client>
+				</ContractIDT>
+			</ObjectFor>
+			<Data>
+				<SetStatus>
+					<StatusCode>43</StatusCode>
+<StatusComment>!26_UpdatedCommentText01</StatusComment>
+				</SetStatus>
+			</Data>
+		</Application>
+	</MsgData>
+</UFXMsg>
