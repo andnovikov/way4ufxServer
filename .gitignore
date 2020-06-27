@@ -27,3 +27,9 @@ hs_err_pid*
 /service/*.iml
 /service/target
 /service/.mvn
+/.idea
+/.mvn
+/target
+/*.iml
+/mvnw
+/mvnw.cmd
