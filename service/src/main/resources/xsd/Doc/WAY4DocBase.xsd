@@ -1,0 +1,1431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="../WAY4Types.xsd"/>
+    <xs:simpleType name="W4DC_IdenticalTo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Requestor"/>
+            <xs:enumeration value="ContratFor"/>
+            <xs:enumeration value="Source"/>
+            <xs:enumeration value="Originator"/>
+            <xs:enumeration value="Destination"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="W4DC_Addendum">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Type of Addendum</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Info" type="W4C_AddInfo">
+                <xs:annotation>
+                    <xs:appinfo> Addendum itself</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_BatchTrailer">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="CheckSum">
+                <xs:annotation>
+                    <xs:documentation>File check sum</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4C_CheckSum">
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="1" name="RecsCount" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:documentation>Count of single items in the File</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="HashTotalAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:documentation>File total amount</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Outward: Loading total</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="1" name="LoadingStatus" type="W4D_LoadingStatus">
+                    <xs:annotation>
+                        <xs:appinfo>Batch loading status: "BATCH REJECTED"  batch rejected; "BATCH ACCEPTED"  batch accepted; "BATCH ACCEPTED PARTIALLY"  batch was partially accepted; some Docs were rejected.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="NOfAcceptedRecs" type="W4D_Counter">
+                    <xs:annotation>
+                        <xs:appinfo>Number of accepted Docs</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="NOfRejectedRecs" type="W4D_Counter">
+                    <xs:annotation>
+                        <xs:appinfo>Number of rejected Docs</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_BeginBalance">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Balance" type="W4C_CurrencyAmount"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_ChainDtls">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrigRefSet" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo> Original Reference numbers. Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrigAmount" type="W4C_CurrencyAmount">
+                <xs:annotation>
+                    <xs:appinfo> Original Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrigTransDate" type="W4D_DateTime">
+                <xs:annotation>
+                    <xs:appinfo> Date of Original Transaction</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:any maxOccurs="1" minOccurs="0" namespace="##other" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_Contractor">
+        <xs:complexContent>
+            <xs:extension base="W4C_Contractor">
+                <xs:attribute name="IdenticalTo" type="W4DC_IdenticalTo" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4DC_DataRs">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Balances" ow:feature="Doc_Balances" type="W4C_BalanceList">
+                <xs:annotation>
+                    <xs:appinfo>Balances</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Stmt" type="W4DC_FullStmt">
+                <xs:annotation>
+                    <xs:appinfo>Statement. The element may contain extension</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Notifications" ow:feature="Doc_IndividualNotifications" type="W4DC_Notifications">
+                <xs:annotation>
+                    <xs:appinfo>Set of individual messages. It is used to return messages com.openway.way4ufx.generated by the authorization request</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Information. Parm/ParmType is reserved for future use</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Information</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_DisputeRule">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="ReasonCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Transaction Reason Code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ReasonDetails" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo> Transaction Reason Details</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Requirement" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Requirement</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_DocAmount">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:appinfo>Principal Amount</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency">
+                    <xs:annotation>
+                        <xs:appinfo> Currency</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtraAmount" type="W4DC_Extra">
+                <xs:annotation>
+                    <xs:appinfo>Fee Amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PostingDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Transaction Posting Date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_DocBase">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="TransType" type="W4DC_TransTypeParms">
+                <xs:annotation>
+                    <xs:appinfo> Transaction type composite information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DocRefSet" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo> Set of Document Identifiers. Supported values: RRN, IRN, SRN, ARN, AuthCode, TRN, ReconsRN, ReceiptRN, DRN, PrevDRN, OrigDRN, SummDRN. Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Document Details</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime">
+                    <xs:annotation>
+                        <xs:appinfo> Local Date of the transaction(transaction date)</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="NWDt" type="W4D_DateTime">
+                    <xs:annotation>
+                        <xs:appinfo>Network date of the transaction </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="AuthDt" type="W4D_DateTime">
+                    <xs:annotation>
+                        <xs:appinfo>Authorization Date. Date when funds were blocked</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="BankingDt" type="W4D_Date">
+                    <xs:annotation>
+                        <xs:appinfo>Banking date when transaction was processed.
+Can be different from transaction registration date
+which is exported in Billing/PhaseDate element.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Description" type="W4D_String">
+                    <xs:annotation>
+                        <xs:appinfo> Transaction description</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="DescriptionExt" type="W4D_String">
+                    <xs:annotation>
+                        <xs:appinfo>Complements Description element with either original or extended transaction details</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="SourceDtls" type="W4C_DeviceTransDetails">
+                    <xs:annotation>
+                        <xs:appinfo>Source details. Details of the Merchant processing a request, such as SIC or Country.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="EMVData" type="W4D_String">
+                    <xs:annotation>
+                        <xs:appinfo>EMV data. It is used in chip transactions</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:annotation>
+                        <xs:appinfo>Contractors</xs:appinfo>
+                    </xs:annotation>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Signer" type="W4DC_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo>Signer Identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Requestor" type="W4DC_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo> Requestor Identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ContractFor" type="W4DC_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo> Source Identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Source" type="W4DC_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo> Source Identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" name="Originator" type="W4DC_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo> Source Identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Destination" type="W4DC_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo> Destination Identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>DocPhases</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="Transaction" type="W4DC_Phase">
+                    <xs:annotation>
+                        <xs:appinfo> Transaction financial information</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Billing" type="W4DC_Phase"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="Reconciliation" type="W4DC_Phase"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Extra Details</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="ResultDtls" type="W4C_ResultDtls">
+                    <xs:annotation>
+                        <xs:appinfo> Result parameters specifying data necessary in the response </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ValidationDtls" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo>Request validation parameters. Parm/ParmType is reserved for future use</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="XFace" type="W4DC_XFace"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="ChainDtls" type="W4DC_ChainDtls">
+                    <xs:annotation>
+                        <xs:appinfo> Information about a Previous transaction</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Addendum" type="W4DC_Addendum">
+                    <xs:annotation>
+                        <xs:appinfo> Addendum</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="ReasonCode" type="W4DC_ReasonCode">
+                <xs:annotation>
+                    <xs:appinfo>Operation reason code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_DocBatch">
+        <xs:annotation>
+            <xs:appinfo> Reserved for Future Use</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="BatchHeader" type="W4DC_DocInfo">
+                <xs:annotation>
+                    <xs:appinfo>Batch header</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="DocList">
+                <xs:annotation>
+                    <xs:appinfo>List of Documents</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="Doc" type="W4DC_DocInfo">
+                            <xs:annotation>
+                                <xs:appinfo>Document</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="BatchTrailer" type="W4DC_BatchTrailer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_DocData">
+        <xs:complexContent>
+            <xs:restriction base="W4DC_DocBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="TransType" type="W4DC_TransTypeParms">
+                        <xs:annotation>
+                            <xs:appinfo> Transaction type composite information</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DocRefSet" type="W4C_ParmSet">
+                        <xs:annotation>
+                            <xs:appinfo> Set of Document Identifiers. Supported values: RRN, IRN, SRN, ARN, AuthCode, TRN, ReconsRN, ReceiptRN, DRN, PrevDRN, OrigDRN, SummDRN. Parm/ParmType is reserved for future use.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:appinfo>Document Details</xs:appinfo>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime">
+                            <xs:annotation>
+                                <xs:appinfo> Local Date of the transaction(transaction date).</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="NWDt" type="W4D_DateTime">
+                            <xs:annotation>
+                                <xs:appinfo>Network date of the transaction </xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="AuthDt" type="W4D_DateTime">
+                            <xs:annotation>
+                                <xs:appinfo>Authorization Date. Date when funds were blocked</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Description" type="W4D_String">
+                            <xs:annotation>
+                                <xs:appinfo> Transaction description</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="SourceDtls" type="W4C_DeviceTransDetails">
+                            <xs:annotation>
+                                <xs:appinfo>Source details. Details of a Merchant processing the request, such as SIC, Country and so on.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="EMVData" type="W4D_String">
+                            <xs:annotation>
+                                <xs:appinfo>EMV data. It is used in chip transactions</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:annotation>
+                                <xs:appinfo>Contractors</xs:appinfo>
+                            </xs:annotation>
+                            <xs:element maxOccurs="1" minOccurs="0" name="Signer" type="W4DC_Contractor">
+                                <xs:annotation>
+                                    <xs:appinfo>Signer Identifier</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="Requestor" type="W4DC_Contractor">
+                                <xs:annotation>
+                                    <xs:appinfo>request initiator. Participates in online requests as a person who requests that the request should be performed. Secret values are checked for this participant.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="ContractFor" type="W4DC_Contractor">
+                                <xs:annotation>
+                                    <xs:appinfo>Participant for whom a request is performed. This is the participant whose financial status may change as a result of a financial operation. If no ContractFor is specified in a request, the Requestor acts as ContractFor.
+Note: During authentication, the Requestor's privilege to perform operations on the Source device on behalf of ContractFor is checked.
+</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="Source" type="W4DC_Contractor">
+                                <xs:annotation>
+                                    <xs:appinfo>Request sender. Device from which a request is received (e.g. an ATM).</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="0" name="Originator" type="W4DC_Contractor">
+                                <xs:annotation>
+                                    <xs:appinfo>Financial transaction sender. In documents, this is SourceContract.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="Destination" type="W4DC_Contractor">
+                                <xs:annotation>
+                                    <xs:appinfo>Transaction target. This participant takes part in a transaction as a recipient only. In documents, this is TargetContract.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:appinfo>DocPhases</xs:appinfo>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Transaction" type="W4DC_Phase">
+                            <xs:annotation>
+                                <xs:appinfo> Transaction financial information</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Billing" type="W4DC_Phase"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Reconciliation" type="W4DC_Phase"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:appinfo>Extra Details</xs:appinfo>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ResultDtls" type="W4C_ResultDtls">
+                            <xs:annotation>
+                                <xs:appinfo> Result parameters specifying data necessary in the response </xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ValidationDtls" type="W4C_ParmSet">
+                            <xs:annotation>
+                                <xs:appinfo>Request validation parameters. Parm/ParmType is reserved for future use</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="XFace" type="W4DC_XFace"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ChainDtls" type="W4DC_ChainDtls">
+                            <xs:annotation>
+                                <xs:appinfo> Information about a Previous transaction</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="Addendum" type="W4DC_Addendum">
+                            <xs:annotation>
+                                <xs:appinfo> Addendum</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ReasonCode" type="W4DC_ReasonCode">
+                        <xs:annotation>
+                            <xs:appinfo>Operation reason code</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4DC_DocInfo">
+        <xs:complexContent>
+            <xs:extension base="W4DC_DocData">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DataRs" type="W4DC_DataRs">
+                        <xs:annotation>
+                            <xs:appinfo>Response Data. The aggregate contains data specific for a response to a request</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4DC_Status">
+                        <xs:annotation>
+                            <xs:appinfo> Transaction status information</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4DC_FullStmt">
+        <xs:choice>
+            <xs:element maxOccurs="1" minOccurs="1" name="MiniStmt" ow:feature="Doc_MiniStmt" type="W4DC_MiniStmt">
+                <xs:annotation>
+                    <xs:appinfo>Mini Statement</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="AdditionalStmt">
+                <xs:annotation>
+                    <xs:appinfo>Additional Statement</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="0" ow:feature="Doc_AdditionalStmt">
+                            <xs:element maxOccurs="1" minOccurs="0" name="BeginBalance" type="W4DC_BeginBalance">
+                                <xs:annotation>
+                                    <xs:appinfo>Begin Balance</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="StmtItem" type="W4DC_Stmt">
+                                <xs:annotation>
+                                    <xs:appinfo>Statement Item</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="Notifications" ow:feature="Doc_StmtNotifications" type="W4DC_Notifications">
+                                <xs:annotation>
+                                    <xs:appinfo>Set of individual or group messages. It is used to extend additional statement to human readable messages.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="Invoice" ow:feature="Doc_Invoices" type="W4I_Invoice">
+                            <xs:annotation>
+                                <xs:appinfo>Obsolet</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:sequence maxOccurs="1" minOccurs="0" ow:feature="Doc_Instalment">
+                            <xs:element maxOccurs="1" minOccurs="0" name="InstalmentSummary" ow:feature="Doc_InstalmentSummary" type="W4I_InstalmentSummary">
+                                <xs:annotation>
+                                    <xs:appinfo>Instalment summary data</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="InstalmentLimit" ow:feature="Doc_InstalmentLimit" type="W4I_InstalmentLimit">
+                                <xs:annotation>
+                                    <xs:appinfo>Instalment limit data</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="InstalmentPlan" ow:feature="Doc_InstalmentPlan" type="W4I_InstalmentPlan">
+                                <xs:annotation>
+                                    <xs:appinfo>Instalment plan data</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="StornoCorrection" ow:feature="Doc_StornoCorrection" type="W4I_StornoCorrection">
+                            <xs:annotation>
+                                <xs:appinfo>Storno correction data</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="CustomStmt" type="W4C_AddInfo">
+                <xs:annotation>
+                    <xs:appinfo>Custom Statement</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4DC_MiniItem">
+        <xs:complexContent>
+            <xs:extension base="W4C_CurrencyAmount">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="TransDate" type="W4D_DateTime">
+                        <xs:annotation>
+                            <xs:appinfo>Transation Date</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TransDetails" type="W4D_String">
+                        <xs:annotation>
+                            <xs:appinfo>Transation Details</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TransName" type="W4D_String">
+                        <xs:annotation>
+                            <xs:appinfo>Transaction type name</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4DC_MiniStmt">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Item" type="W4DC_MiniItem"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_Notification">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Type">
+                <xs:annotation>
+                    <xs:documentation>Type of Notification. Supported values: Individual, Group</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Group"/>
+                        <xs:enumeration value="Individual"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Xml">
+                    <xs:annotation>
+                        <xs:documentation>Formatted message</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="Item">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="1" minOccurs="0" name="Label" type="W4D_Code">
+                                            <xs:annotation>
+                                                <xs:appinfo> Parameter Code</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_Name">
+                                            <xs:annotation>
+                                                <xs:appinfo> Parameter Value</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Text" type="W4D_String">
+                    <xs:annotation>
+                        <xs:documentation>Plain text message</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_Notifications">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Notification" type="W4DC_Notification"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_Phase">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="PhaseDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo> Date of executing the current phase of the transaction </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency">
+                    <xs:annotation>
+                        <xs:appinfo> Currency</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Extra" type="W4DC_Extra">
+                <xs:annotation>
+                    <xs:appinfo> Extra Information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_Stmt">
+        <xs:choice>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="PostingDetails">
+                    <xs:annotation>
+                        <xs:appinfo>Posting Information</xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="0" name="Contractor">
+                                <xs:annotation>
+                                    <xs:appinfo>Contractor for which the statement was done</xs:appinfo>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="IdenticalTo" type="W4DC_IdenticalTo" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="AccountAmount">
+                                <xs:annotation>
+                                    <xs:appinfo> Extra Information</xs:appinfo>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:complexContent>
+                                        <xs:extension base="W4DC_Extra">
+                                            <xs:sequence>
+                                                <xs:element maxOccurs="1" minOccurs="0" name="AccountNumber" type="W4D_LongCode">
+                                                    <xs:annotation>
+                                                        <xs:appinfo>Account Number</xs:appinfo>
+                                                    </xs:annotation>
+                                                </xs:element>
+                                            </xs:sequence>
+                                        </xs:extension>
+                                    </xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="ProcessingStatus" type="W4D_Code">
+                                <xs:annotation>
+                                    <xs:appinfo>Processing Status of the document. Supported values: Auth, Posted, Reversed, Dispute</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4DC_Status">
+                                <xs:annotation>
+                                    <xs:appinfo>Current status of the Document</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="DocData">
+                    <xs:annotation>
+                        <xs:appinfo>Document Information</xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="W4DC_DocBase">
+                                <xs:choice>
+                                    <xs:element maxOccurs="1" minOccurs="0" name="AddDetails" type="W4D_String">
+                                        <xs:annotation>
+                                            <xs:appinfo>Additional Details</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                                        <xs:annotation>
+                                            <xs:appinfo>Additional Information</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1" ow:feature="Doc_StmtObsolete">
+                <xs:annotation>
+                    <xs:documentation>Deprecated</xs:documentation>
+                </xs:annotation>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Amount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>ISO-4217 currency code</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="TransDate" type="W4D_DateTime">
+                        <xs:annotation>
+                            <xs:appinfo>Transation Date</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TransDetails" type="W4D_String">
+                        <xs:annotation>
+                            <xs:appinfo>Transation Details</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="TransName" type="W4D_String">
+                        <xs:annotation>
+                            <xs:appinfo>Transaction type name</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" name="DocRefSet" type="W4C_ParmSet">
+                        <xs:annotation>
+                            <xs:appinfo> Set of Document Identifiers. Parm/ParmType is reserved for future use</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TransCode" type="W4DC_TransCode">
+                        <xs:annotation>
+                            <xs:appinfo> Transaction Code </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="SourceDtls" type="W4C_DeviceTransDetails">
+                        <xs:annotation>
+                            <xs:appinfo>Source details</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="Contractor" type="W4C_Contractor">
+                            <xs:annotation>
+                                <xs:appinfo>Contractor of the Transaction</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ContraContractor" type="W4C_Contractor">
+                            <xs:annotation>
+                                <xs:appinfo>Contractor of the Transaction</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="SettlementAmount" type="W4DC_DocAmount">
+                        <xs:annotation>
+                            <xs:appinfo>Settlement Information</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="1" name="AddDetails" type="W4D_String">
+                            <xs:annotation>
+                                <xs:appinfo>Additional Details</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="AddInfo" type="W4C_AddInfo">
+                            <xs:annotation>
+                                <xs:appinfo>Additional Information</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:sequence>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4DC_TransCode">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="MsgCode" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Message type code. For details, see comments for the TransCode element</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ServiceCode" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Service code. See comments for element TransCode for details</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ServiceCodeExt" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Service Code Extension is used in pair with the ServiceCode for identifiers composed of two parts.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:appinfo>Classifiers</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="FinCategory" type="W4D_FinCategory">
+                    <xs:annotation>
+                        <xs:appinfo>Financial Category. It is used in statements and for data export. Possible values: "Y"  Authorisation; "N"  Financial; "C"  DataCapture; "P"  PreAuth; "y"  Transit Auth; "p"  Transit Preauth; "D"  Auth Check; "d"  Auth Check Transit; "Z"  Post Auth.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="RequestCategory" type="W4D_RequestCategory">
+                    <xs:annotation>
+                        <xs:appinfo> Request Category. Possible Values: 'Q' - Request; 'P' - Advice; 'R' - Reversal; 'J' - Adjustment; 'A' - Part Advice; 'O' - Pseudo-Advice; 'B' - Not matched Adjustment. It is used in statements and data unloading.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="ServiceClass" type="W4D_ServiceClass">
+                    <xs:annotation>
+                        <xs:appinfo>Service Code. Possible Values:
+'T' - Transaction
+'M' - Misc
+'I' - Interests
+'U' - Upper Norm.
+'L' - Lower Norm.
+'D' - Due Norm.
+'A' - Account Transfer
+'C' - Credit Limit
+'R' - Rev/Exp
+'B' - Balance Inquiry
+'S' - Online Statement
+'E' - End Cycle
+'i' - Interest Fee
+'P' - Online Payment
+'p' - External Payment
+'d' - Due Special
+'u' - Upper Limit Special
+'r' - Reserve for Bad Debts
+'l' - Lower Limit Special
+'c' - Additional  Cr Limit
+'X' - Additional Online Service
+'+' - Top Up
+'V' - Verification
+. It is used in statements and data unloading.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="TransTypeCode" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Transaction Type code.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="TransTypeIDT" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Transaction type unique identifier</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="TransTypeId" type="W4D_Counter">
+                    <xs:annotation>
+                        <xs:appinfo>Transaction type internal identifier</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="TransTypeExtension" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Transaction type extension</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_TransTypeParms">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="TransCode" type="W4DC_TransCode">
+                <xs:annotation>
+                    <xs:appinfo>TransCode - Transaction type determiner. There are some dictionaries allowing Transition Types to be defined. Therefore, there are some cases of Type definition. Supported dictionaries:  1. Message Type. A message type code is placed in the MsgCode element. 2. Order. An order's Payment Type code is placed in ServiceCode; Order Code is placed in ServiceCodeExt. MsgCode is filled with "OrdReq" for requests, "OrdRev" for reverse messages, or "OrdAdv" for advice messages. 3. Additional Service Type. An Additional Service Type code is placed in the ServiceCode element. MsgCode is filled with AddServReq for requests. </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TransCondition" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Transaction Condition attributes.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrigTransCondition" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Transaction Condition attributes of Original transaction</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TransRules" type="W4C_TransRules">
+                <xs:annotation>
+                    <xs:appinfo>Transaction rules. The aggregate contains additional directives for transaction processing. Reserved codes: DateFrom; DateTo; Period; PmtMethod - payment method;  OnUsCreditCard; NotOnUsCreditCard; Cash; PmtInstrument - payment instrument;
+PartialApprove - Approval for partial amount; TrustedSource(Yes/No) - request from trusted source, the flag is used in operations for security values modification.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DisputeRules" type="W4DC_DisputeRule">
+                <xs:annotation>
+                    <xs:appinfo>Dispute management information. The aggregate contains additional directives for transaction dispute management</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_XFace">
+        <xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="Details" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo> Additional Details</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo>Additional Information. Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4DC_ReasonCode">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="Code" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:appinfo>
+                        Reversal reason codes:
+                        5 - Timeout Reversal,
+                        6 - Error,
+                        17 - Customer Cancellation,
+                        32 - Partial Reversal,
+                        34 - Suspect Fraud,
+                        68 - Response received too late
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" name="Details" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Detailed description of reason code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_DocAmount">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>Principal Amount</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency">
+                    <xs:annotation>
+                        <xs:appinfo> Currency</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtraAmount" type="W4DC_Extra">
+                <xs:annotation>
+                    <xs:appinfo>Fee Amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PostingDate" type="W4D_Date"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_Invoice">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="InvoiceInfo" type="W4I_InvoiceInfo">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="InvoiceAmount">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Amount Information</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="W4DC_DocAmount">
+                            <xs:choice>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DocRefN" type="W4D_Code">
+                                    <xs:annotation>
+                                        <xs:appinfo>Document Reference Number</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DocInfo" type="W4DC_DocData">
+                                    <xs:annotation>
+                                        <xs:appinfo>Document Full Information</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:choice>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PaidAmount" type="W4DC_DocAmount">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Paid Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="InvoiceAction">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Actions</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="W4DC_DocAmount">
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="1" name="ActionType" type="W4D_Code">
+                                    <xs:annotation>
+                                        <xs:appinfo>Type of the Invoice Action. Supported Values:
+Payment,
+PaymentReversal,
+InvoiceReject,
+InvoiceReversal</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:choice maxOccurs="1" minOccurs="0">
+                                    <xs:element maxOccurs="1" minOccurs="1" name="DocRefN" type="W4D_Code">
+                                        <xs:annotation>
+                                            <xs:appinfo>Document Reference Number</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="DocInfo" type="W4DC_DocBase">
+                                        <xs:annotation>
+                                            <xs:appinfo>Document Full Information</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:sequence>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_InvoiceBatch">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="BatchDetails" type="W4I_InvoiceInfo"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="BatchScheme" type="W4C_Any">
+                <xs:annotation>
+                    <xs:appinfo>Will be used for instalments</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="BatchAmount" type="W4I_DocAmount"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="InvoiceInfo" type="W4I_Invoice"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_InvoiceInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="RefN" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Reference Number</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PaymentScheme" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Payment Scheme</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="EffectiveDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Effective Date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DueDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Invoice  Due Date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Contractor" type="W4C_Contractor">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Contractor</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Details" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>Invoice Details</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                    <xs:annotation>
+                        <xs:appinfo>Invoice  Additional Information</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Invoice Status. Supported values:
+Waiting,
+Paid,
+PartiallyPaid,
+WriteOff,
+PartiallyWriteOff,
+</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_StornoCorrection">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="CorrectionDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Correction date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OriginalTransferDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Original transfer date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="CorrectionBillingDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Correction billing date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Currency of amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="CorrectionAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Correction amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="StornoDocId" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:appinfo>Storno doc id</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TransDetails" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Transaction details for correction</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_InstalmentSummary">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="NextPaymentDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Next payment date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Currency of amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TotalDueAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Value of total due amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TotalOvdAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Value of total ovd amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TotalPrincipalToPay" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Value of total principal to pay</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TotalFeeToPay" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Value of total principal to pay</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="NextPaymentAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Value of next payment amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ActivePlanCount" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:appinfo>Active plan count</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TotalPlanCount" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:appinfo>Total plan count</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_InstalmentLimit">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Limit date from</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateTo" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Limit date to</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LimitName" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Name of limit</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LimitCode" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Code of limit</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Currency of limit values</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LimitValue" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Value of limit</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="CurrentValue" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Current value of limit</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AvailableSigned" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Limit available signed</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Available" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Limit available</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Overlimit" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Overlimit</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_InstalmentPlan">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="InstalmentIDT" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:appinfo>Instalment plan identifier</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="CreationDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Date of Instalment creation</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="FirstPaymentDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Date of first payment</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ReportDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Report date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                <xs:annotation>
+                    <xs:appinfo>Currency of instalment plan amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="TotalAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Total amount of instalment</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Principal" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Instalment principal</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Fee" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Fee Amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="PaidAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Paid Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DueAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Due Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OvdAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Ovd Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="WrittenOffAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Written Off Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="FullRepaymentAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Full Repayment Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AvailableErFunds" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Available funds</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TransactionDetails" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Transaction details</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="InstalmentPortion" type="W4I_InstalmentPortion">
+                <xs:annotation>
+                    <xs:appinfo>Portions of current instalment plan</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4I_InstalmentPortion">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="PortionNumber" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Number of instalment portion</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OpenDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Portion open date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DueDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Portion due date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="RepDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Portion report date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                <xs:annotation>
+                    <xs:appinfo>Currency of instalment portion amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="PortionAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Portion amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Principal" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Portion principal</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Fee" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Fee Amounts</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="PaidAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Paid Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="WrittenOffAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Written Off Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Invoice" type="W4I_Invoice"/>
+</xs:schema>

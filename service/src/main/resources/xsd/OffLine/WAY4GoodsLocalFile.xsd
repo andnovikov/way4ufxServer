@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="WAY4FileTypes.xsd"/>
+    <xs:complexType name="W4G_GoodsLocalSet">
+        <xs:annotation>
+            <xs:appinfo>The type is container of lines with Goods attributes and goods_coding_set Code the Goods belongs to</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>goods_coding_set CODE the GoodsLocalItems belongs to. Together with ExtCode line item attribute composes business key used to identify row.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>goods_coding_set human readable name. Optional, used only for information.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsNomenCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>goods_nomenclature CODE the LocalSet belongs to.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsLocalItems">
+                <xs:annotation>
+                    <xs:appinfo>The type is container of GoodsLocalItems need to be loaded.</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="GoodsLocalItem" type="W4G_GoodsLocalItem"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4G_GoodsLocalItem">
+        <xs:annotation>
+            <xs:appinfo>The values of attributes will be inserted or updated in goods_local_item table.</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="ExtCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods external code. Received in the inbound message FO.EA.FFxx.D1 tag. Together with GoodsLocalSet/Code composes business key used to identify row.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="GoodsItemCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods system code. The reference to an Item of common Goods dictionary.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsGroup" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods Group code. Used to make file more readable.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsCategory" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods Category Code. Used to make file more readable.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Goods Name in local language.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LatinName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Goods Name in English.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="VAT" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>VAT value used for given Goods.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4D_Text">
+                <xs:annotation>
+                    <xs:appinfo>Additional information need to be stored for given Goods. The OpenWay tag-value format should be used.
+If no value specified then existing in the database value will not be deleted. Otherwise existing value will be replaced with received one.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="UnitType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods measurement unit code. Used to make file more readable.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo">
+                <xs:annotation>
+                    <xs:appinfo>Goods activity indicator.
+The value Yes means the Goods is active. The value No means transaction with this Goods Code will be declined.
+If no tag specified the Goods will be considered Active.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="EffectiveDate" type="W4D_DateTime">
+                <xs:annotation>
+                    <xs:appinfo>The date and time since the Goods became available for transactions.
+If no value specified then the Goods will be available for transactions.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ExpirationDate" type="W4D_DateTime">
+                <xs:annotation>
+                    <xs:appinfo>The date and time since the Goods will became not available for transactions.
+If no value specified then the Goods will be available for transactions.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4G_GoodsLocalFile">
+        <xs:annotation>
+            <xs:appinfo>The purpose of this file is to load Fleet cards Goods Local dictionary.</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader" type="W4G_GoodsFileHeader"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsNomens">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="GoodsNomen" type="W4G_GoodsNomen"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="UnitTypes">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="UnitType" type="W4G_UnitType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsCategories">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="GoodsCategory" type="W4G_GoodsCategory"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsGroups">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="GoodsGroup" type="W4G_GoodsGroup"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsItems">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="GoodsItem" type="W4G_GoodsItem"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsLocalSets">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="GoodsLocalSet" type="W4G_GoodsLocalSet"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4G_GoodsFileHeader">
+        <xs:complexContent>
+            <xs:restriction base="W4F_FileHeader">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="FileLabel" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>File label defines type of the file content.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="FormatVersion" type="W4D_Version">
+                            <xs:annotation>
+                                <xs:appinfo>File format version: 2.0</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Sender" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Sender code. The code from the "Member ID" field of the BIN table ("Full \ Configuration Setup \ Routing \ BIN Groups \ [BIN Table]")</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="CreationDate" type="W4D_Date">
+                            <xs:annotation>
+                                <xs:appinfo>File creation date.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="CreationTime" type="W4D_Time">
+                            <xs:annotation>
+                                <xs:appinfo>File creation time.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Number" type="W4D_Counter">
+                            <xs:annotation>
+                                <xs:appinfo>Sequential file number within the creation date.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Institution" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Financial institution assigned to the application. Codes are defined in the Branch Code field of the Financial Institutions table ("Full \ Configuration Setup \ Main Tables \ Financial Institutions").</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4G_GoodsNomen">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4G_UnitType">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4G_GoodsGroup">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="UnitType" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4D_Text"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="ParentGoodsGroup" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsNomen" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4G_GoodsItem">
+        <xs:annotation>
+            <xs:appinfo>The values of attributes will be inserted or updated in goods_item table.</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods code. Used to identify Goods within GoodsNomenclature.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Goods human readable Name.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="GoodsCategory" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods Category Code. Part of GoodsGroup composite key Code:Category:Nomen</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="GoodsGroup" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods Group code. The reference to GoodsGroup GoodsItem belongs to.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsNomen" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods Nomenclature Code GoodsItem belongs to.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="UnitType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Goods measurement unit code. Used to make file more readable.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4D_Text">
+                <xs:annotation>
+                    <xs:appinfo>Additional information need to be stored for given Goods. The OpenWay tag-value format should be used.
+If no value specified then existing in the database value will not be deleted. Otherwise existing value will be replaced with received one.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo">
+                <xs:annotation>
+                    <xs:appinfo>The value Yes means the Goods is active. The value No means transaction with this Goods Code will be declined.
+If no tag specified the Goods will be considered Active.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4G_GoodsCategory">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="UnitType" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4D_Text"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="GoodsNomen" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GoodsLocalFile" type="W4G_GoodsLocalFile"/>
+    <xs:element name="GoodsLocalSet" type="W4G_GoodsLocalSet"/>
+    <xs:element name="GoodsNomen" type="W4G_GoodsNomen"/>
+    <xs:element name="UnitType" type="W4G_UnitType"/>
+    <xs:element name="GoodsGroup" type="W4G_GoodsGroup"/>
+    <xs:element name="GoodsItem" type="W4G_GoodsItem"/>
+    <xs:element name="GoodsCategory" type="W4G_GoodsCategory"/>
+</xs:schema>

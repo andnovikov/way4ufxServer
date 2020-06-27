@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="../Doc/WAY4AccTrans.xsd"/>
+    <xs:include schemaLocation="WAY4FileTypes.xsd"/>
+    <xs:complexType name="W4T_AccTransFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4F_FileHeader">
+                            <xs:sequence>
+                                <xs:sequence maxOccurs="1" minOccurs="1">
+                                    <xs:element maxOccurs="1" minOccurs="0" name="FileLabel" type="W4D_Code">
+                                        <xs:annotation>
+                                            <xs:appinfo>File label defines type of the file content.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="FormatVersion" type="W4D_Version">
+                                        <xs:annotation>
+                                            <xs:appinfo>File format version: 2.0</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Sender" type="W4D_Code">
+                                        <xs:annotation>
+                                            <xs:appinfo>Sender code. The code from the "Member ID"
+field of the BIN table ("Full \ Configuration
+Setup \ Routing \ BIN Groups \ [BIN
+Table]") with its 3-character prefix removed.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="CreationDate" type="W4D_Date">
+                                        <xs:annotation>
+                                            <xs:appinfo>File creation date.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="CreationTime" type="W4D_Time">
+                                        <xs:annotation>
+                                            <xs:appinfo>File creation time.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:choice maxOccurs="1" minOccurs="1">
+                                        <xs:element maxOccurs="1" minOccurs="1" name="FileSeqNumber" type="W4D_Counter">
+                                            <xs:annotation>
+                                                <xs:appinfo>Sequential file number within the creation date.</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:choice>
+                                    <xs:choice maxOccurs="1" minOccurs="1">
+                                        <xs:element maxOccurs="1" minOccurs="0" name="Receiver" type="W4D_Code">
+                                            <xs:annotation>
+                                                <xs:appinfo>ID of financial institution assigned to the
+Doc. Codes are defined in the Branch
+Code field of the Financial Institutions table
+("Full \ Configuration Setup \ Main Tables \
+Financial Institutions").</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:choice>
+                                </xs:sequence>
+                                <xs:sequence maxOccurs="1" minOccurs="1">
+                                    <xs:element maxOccurs="1" minOccurs="0" name="OriginalFileHeader" type="W4F_OriginalFileHeader"/>
+                                </xs:sequence>
+                            </xs:sequence>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="AccountingTransactionList" type="W4T_AccTransList">
+                <xs:annotation>
+                    <xs:appinfo>Docs list.</xs:appinfo>
+                    <xs:documentation>List of Accounting Transactions</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileTrailer" type="W4F_BaseFileTrailer">
+                <xs:annotation>
+                    <xs:appinfo>File control information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_AccTransList">
+        <xs:choice>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Analytic" type="W4T_AnalytTransfer"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Synthetic" type="W4T_Transfer"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4T_AccTransNotification">
+        <xs:sequence>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="AccountingTransactionRefSet" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo> Set of Document Identifiers. Parm/ParmType is reserved for future use</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:choice maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="AnaliticTransaction" type="W4T_AnalytTransfer"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="SyntheticTransaction" type="W4T_Transfer"/>
+                </xs:choice>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4C_Status">
+                <xs:annotation>
+                    <xs:documentation>Accounting Transaction Status</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_AccTransRespFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader">
+                <xs:annotation>
+                    <xs:appinfo>File registration information.</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4F_FileHeader">
+                            <xs:sequence>
+                                <xs:sequence maxOccurs="1" minOccurs="1">
+                                    <xs:element maxOccurs="1" minOccurs="0" name="FileLabel" type="W4D_Code">
+                                        <xs:annotation>
+                                            <xs:appinfo>File label defines type of the file content.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="FormatVersion" type="W4D_Version">
+                                        <xs:annotation>
+                                            <xs:appinfo>File format version: 2.0</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Sender" type="W4D_Code">
+                                        <xs:annotation>
+                                            <xs:appinfo>Sender code. The code from the "Member ID"
+field of the BIN table ("Full \ Configuration
+Setup \ Routing \ BIN Groups \ [BIN
+Table]") with its 3-character prefix removed.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="CreationDate" type="W4D_Date">
+                                        <xs:annotation>
+                                            <xs:appinfo>File creation date.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="CreationTime" type="W4D_Time">
+                                        <xs:annotation>
+                                            <xs:appinfo>File creation time.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:choice maxOccurs="1" minOccurs="1">
+                                        <xs:element maxOccurs="1" minOccurs="1" name="FileSeqNumber" type="W4D_Counter">
+                                            <xs:annotation>
+                                                <xs:appinfo>Sequential file number within the creation date.</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:choice>
+                                    <xs:choice maxOccurs="1" minOccurs="1">
+                                        <xs:element maxOccurs="1" minOccurs="0" name="Receiver" type="W4D_Code">
+                                            <xs:annotation>
+                                                <xs:appinfo>ID of financial institution assigned to the
+Doc. Codes are defined in the Branch
+Code field of the Financial Institutions table
+("Full \ Configuration Setup \ Main Tables \
+Financial Institutions").</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:choice>
+                                </xs:sequence>
+                                <xs:sequence maxOccurs="1" minOccurs="1">
+                                    <xs:element maxOccurs="1" minOccurs="0" name="OriginalFileHeader" type="W4F_OriginalFileHeader"/>
+                                </xs:sequence>
+                            </xs:sequence>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="NotificationsList">
+                <xs:annotation>
+                    <xs:appinfo>Notification list. If there are no errors, it is left empty</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="Notification" type="W4T_AccTransNotification">
+                            <xs:annotation>
+                                <xs:appinfo>Notification</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileTrailer" type="W4F_BaseFileTrailer">
+                <xs:annotation>
+                    <xs:appinfo>File control information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AccountingTransactionFile" type="W4T_AccTransFile"/>
+    <xs:element name="AccountingTransactionResponseFile" type="W4T_AccTransRespFile"/>
+</xs:schema>

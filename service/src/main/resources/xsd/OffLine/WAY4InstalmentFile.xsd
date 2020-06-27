@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="WAY4FileTypes.xsd"/>
+    <xs:complexType name="W4F_InstalmentFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader" type="W4F_OriginalFileHeader"/>
+            <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="InstalmentPlan" type="W4F_InstalmentPlan"/>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileTrailer" type="W4F_InstalmentFileTrailer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_InstalmentFileTrailer">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="CheckSum" type="W4D_Amount"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="RecCount" type="W4D_Counter"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_InstalmentPlan">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Total">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Contract" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ContractIDT" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Scheme" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="PlanID" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ChainIDT" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Document" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4D_Name"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="TotalAmount" type="W4D_Amount"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="AmountToPay" type="W4D_Amount"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="WrittenOffAmount" type="W4D_Amount"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="OverdueAmount" type="W4D_Amount"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Tags" type="W4F_InstalmentTags"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Subtotals" type="W4F_InstalmentSubtotals"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Portions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="Portion">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4D_Name"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="EffDate" type="W4D_Date"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="DueDate" type="W4D_Date"/>
+                                    <xs:element maxOccurs="1" minOccurs="0" name="RepDate" type="W4D_Date"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="SeqNumber" type="W4D_Counter"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="TotalAmount" type="W4D_Amount"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="AmountToPay" type="W4D_Amount"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="WrittenOffAmount" type="W4D_Amount"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="OverdueAmount" type="W4D_Amount"/>
+                                    <xs:element maxOccurs="1" minOccurs="0" name="Subtotals" type="W4F_InstalmentSubtotals"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_InstalmentSubtotals">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Subtotal">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4D_Name"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="TotalAmount" type="W4D_Amount"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="AmountToPay" type="W4D_Amount"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="WrittenOffAmount" type="W4D_Amount"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="OverdueAmount" type="W4D_Amount"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_InstalmentTags">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Tag">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_String"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalmentFile" type="W4F_InstalmentFile"/>
+</xs:schema>

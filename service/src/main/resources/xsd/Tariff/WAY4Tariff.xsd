@@ -1,0 +1,1640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="../WAY4Types.xsd"/>
+    <xs:simpleType name="W4D_InstSchemeTrfDueMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Billing"/>
+            <xs:enumeration value="Month"/>
+            <xs:enumeration value="Working Day"/>
+            <xs:enumeration value="Day"/>
+            <xs:enumeration value="Fixed day of month"/>
+            <xs:enumeration value="Custom"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_TariffApplyModeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Active"/>
+            <xs:enumeration value="Inactive"/>
+            <xs:enumeration value="FromStartBilling"/>
+            <xs:enumeration value="FromDate"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromService">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FromTemplate">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FromScheme">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ActiveUsage">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Active instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="InactiveUsage">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Inactive instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_AgeingApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromTemplate">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_BillingApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromScheme">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_GLNumberApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromTemplate">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_InstalmentFeeApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromService">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_InstalmentSchemeApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromService">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_InterestApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromStartBilling"/>
+            <xs:enumeration value="FromDate"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromTemplate">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_InterestTaxApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromStartBilling"/>
+            <xs:enumeration value="FromDate"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromTemplate">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ServiceApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromService">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ServiceLimitApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Active"/>
+            <xs:enumeration value="Inactive"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromService">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ServiceValueDaysApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="FromService">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_UsageApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Active"/>
+            <xs:enumeration value="Inactive"/>
+            <xs:enumeration value="Skip"/>
+            <xs:enumeration value="ActiveUsage">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Active instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="InactiveUsage">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Inactive instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FromTemplate">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated. Use Skip instead.</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ThresholdApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_TechnicalApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ConversionApplyMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FromTariff"/>
+            <xs:enumeration value="Skip"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="W4F_AgeingTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up due normalisation parameters in account templates and, for instance, to calculate minimum payments during credit Product setup</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="DuePeriod" type="W4D_Counter">
+                            <xs:annotation>
+                                <xs:appinfo>Used to determine the date of normalisation</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="GracePeriod" type="W4D_Counter">
+                            <xs:annotation>
+                                <xs:appinfo>Used to specify the delay before generating a due normalisation accounting transfer</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="MinRepayment" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>If the account balance (or the account balance multiplied by the value of the Repayment Pcnt field) is less than the value specified in the Min Repayment field, funds are not transferred to the account specified in the Due Template field of the account template</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MinRqRepayment" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Minimum amount that must be transferred to the account specified in the Due Template field of the account template</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RepaymentPcnt" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Percentage that must be transferred to the account specified in the Due Template field of the account template</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                            <xs:annotation>
+                                <xs:appinfo>Deprecated and should not be used</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_BillingSchemeTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up billing cycle parameters.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="BillingDay" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Shift of billing cycle end date</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="MinBilling" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Minimum number of days in a billing cycle</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="OVLTolerancePcnt" type="W4D_Amount"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="OVLToleranceAmount" type="W4D_Amount"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="AmountCurrency" type="W4D_Currency"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_GLNumberTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used during account template setup to specify GL account numbers.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="GLNumber" type="W4D_LongCode">
+                        <xs:annotation>
+                            <xs:appinfo>GL account number used for synthetic accounting of analytic accounts com.openway.way4ufx.generated using this template</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_InstalmentFeeTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up instalment loan fee parameters.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FeeMin" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Minimum fee amount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FeeMax" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Maximum fee amount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FeeBase" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Base fee amount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FeeRatePcnt" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Fee percentage</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>Fee currency</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_InstalmentSchemeTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up parameters of instalment schemes that generate instalment plans.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="MinDealAmount" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Minimum amount of an initial transaction</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MaxDealAmount" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Maximum amount of an initial transaction</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="0" name="DueMode" type="W4D_InstSchemeTrfDueMode"/>
+                            <xs:element maxOccurs="1" minOccurs="0" name="DuePeriod" type="W4D_Counter"/>
+                        </xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="0" name="MinInstAmount" type="W4D_Amount">
+                                <xs:annotation>
+                                    <xs:appinfo>Minimum amount of an instalment in an instalment plan</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="MaxInstAmount" type="W4D_Amount">
+                                <xs:annotation>
+                                    <xs:appinfo>Maximum amount of an instalment in an instalment plan</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="0" name="TenorDefault" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Default number of instalment months</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="TenorMin" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Minimum number of instalment months</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="TenorMax" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Maximum number of instalment months</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ShiftPlan" type="W4D_Amount"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>Currency in which limitations of an initial transaction amount and an instalment amount are specified</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="SpecialParms" type="W4D_String">
+                        <xs:annotation>
+                            <xs:appinfo>Special parameters of the instalment scheme</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_InterestTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up interest rates in account templates.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="RatePcnt" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Interest rate</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FeeRatePcnt" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Fee rate charged from the revenue in the form of deposit account interest</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_InterestTaxTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used during setup of tariffs with the "Interest" role to specify interest rates of the financial gain tax for gain received in the form of deposit interest or saving on loan interest.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="BaseRate" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Base rate for calculating the threshold value of the financial gain tax rate.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TaxRate" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Tax rate</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="BaseRateMultiplier" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Factor by which the base rate must be multiplied to calculate the threshold value over which the financial gain tax is charged</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="BaseRateAddPoints" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Percentage that must be added to the base rate to calculate the threshold value over which the financial gain tax is charged</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_ServiceLimitTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up Services for calculating the maximum and minimum transaction amount, to specify account balance limitations (e.g. when a deposit Product with a floating interest rate is set up), and to specify limitations related to Events that open or close when the value of a specific balance type changes.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="MaxAmount" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Maximum allowed transaction amount or account balance, or maximum threshold value of an Event related to balance type value changes. A zero value in the field means that there are no limitations</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="MinAmount" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Minimum allowed transaction amount or account balance or minimum threshold value of an Event related to balance type value changes. A zero value in the field means that there are no limitations</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FloorLimit" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Maximum allowed transaction without authorization </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>Limiter currency</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ExpiryPeriod" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Expiry period</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ServicePriority" type="W4D_Counter"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_ServiceTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up fee calculation rules in Services.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="FeeBase" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Additional fee whose charge is mandatory and not depending on a fee rate</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="FeeMin" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Minimum fee amount that will be charged regardless of a transaction amount</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="FeeMax" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Maximum transaction fee amount</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="FeePcnt" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Fee rate</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="IncreasePcnt" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Percentage added to authorisation and clearing amounts sent to the issuer</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                            <xs:annotation>
+                                <xs:appinfo>Fee currency</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="FXRateType">
+                            <xs:annotation>
+                                <xs:appinfo>Deprecated and should not be used.</xs:appinfo>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="M"/>
+                                    <xs:enumeration value="B"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TariffPriority" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Deprecated and should not be used</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="SpecialParms" type="W4D_String"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_ServiceValueDaysTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up fields Value Days and Expiry Days in Services.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ValueDays" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Transaction payment time shift in days</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ExpiryPeriod" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Deprecated and should not be used. This element is ignored by the system.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_TariffDomain">
+        <xs:annotation>
+            <xs:appinfo>In a tariff domain, users specify numeric values for each tariff in the domain and the effective and expiration dates of tariff numeric values.</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Tariff domain code</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="UniqueCode" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>Tariff domain unique code</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ParentUniqueCode" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>Parent domain unique code</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Tariff domain name</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsPersonal" type="W4D_YesNo">
+                <xs:annotation>
+                    <xs:appinfo>Shows whether this is a personal tariff domain</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Tariffs" type="W4F_Tariffs"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_TariffGeneric">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="TariffType">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:choice maxOccurs="1" minOccurs="1">
+                            <xs:annotation>
+                                <xs:appinfo>Either TariffCode, or TariffCodeExt, or both must be present</xs:appinfo>
+                            </xs:annotation>
+                            <xs:sequence maxOccurs="1" minOccurs="1">
+                                <xs:element maxOccurs="1" minOccurs="1" name="TariffCode" type="W4D_Code">
+                                    <xs:annotation>
+                                        <xs:appinfo>Tariff code</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="TariffCodeExt" type="W4D_String">
+                                    <xs:annotation>
+                                        <xs:appinfo>Tariff unique code</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="TariffCodeExt" type="W4D_String">
+                                <xs:annotation>
+                                    <xs:appinfo>Tariff unique code</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:choice>
+                        <xs:element maxOccurs="1" minOccurs="0" name="TariffTypeExt" type="W4D_String"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="LimitTariffCode" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>TAriff with the "Service Limit" role registered in the system. If the field is filled in, the account balance limiter is taken into consideration during tariff use.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="PreferenceTypeCode" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Preference types registered in the system</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ApplyRules" type="W4D_String"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_TariffApplyModeType">
+                <xs:annotation>
+                    <xs:appinfo>Used values for ApplyMode:
+For Service Role -- FromTariff, FromService;
+For ServiceLimit Role  -- Active, Inactive, FromService;
+For ServiceValueDays Role -- FromTariff, FromService;
+For Interest Role -- FromStartBilling, FromDate, FromTemplate;
+For InterestTax Role -- Active, Inactive;
+For Ageing Role -- FromTariff, FromTemplate;
+For Usage Role -- ActiveUsage, InactiveUsage, FromTemplate;
+For BillingScheme Role -- FromTariff, FromScheme;
+For GLNumber Role -- FromTariff, FromTemplate;
+For InstScheme Role -- FromTariff, FromService;
+For InstFee Role -- FromTariff, FromService;
+For Threshold Role -- FromTariff, Skip;
+For Technical Role -- FromTariff, Skip</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Date From specify the effective banking dates of the tariff's numeric values</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_Tariffs">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Tariff">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ServiceTariff" type="W4F_ServiceTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up fee calculation rules in Services.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ServiceLimitTariff" type="W4F_ServiceLimitTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up Services for calculating the maximum and minimum transaction amount, to specify account balance limitations (e.g. when a deposit Product with a floating interest rate is set up), and to specify limitations related to Events that open or close when the value of a specific balance type changes.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ServiceValueDaysTariff" type="W4F_ServiceValueDaysTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up fields Value Days and Expiry Days in Services.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="InterestTariff" type="W4F_InterestTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up interest rates in account templates.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="InterestTaxTariff" type="W4F_InterestTaxTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used during setup of tariffs with the "Interest" role to specify interest rates of the financial gain tax for gain received in the form of deposit interest or saving on loan interest.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="AgeingTariff" type="W4F_AgeingTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up due normalisation parameters in account templates and, for instance, to calculate minimum payments during credit Product setup</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="UsageTariff" type="W4F_UsageTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up usage limiter parameters.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="BillingSchemeTariff" type="W4F_BillingSchemeTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up billing cycle parameters.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="InstalmentScheme" type="W4F_InstalmentSchemeTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up parameters of instalment schemes that generate instalment plans.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="InstalmentFeeTariff" type="W4F_InstalmentFeeTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up instalment loan fee parameters.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="GLNumber" type="W4F_GLNumberTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used during account template setup to specify GL account numbers.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Threshold" type="W4F_ThresholdTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up various threshold values.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Technical" type="W4F_TechnicalTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up various other values depending on context.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Conversion" type="W4F_ConversionTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up various conversion values.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_UsageTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up usage limiter parameters.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="MaxNumber" type="W4D_Counter">
+                            <xs:annotation>
+                                <xs:appinfo>Maximum allowed number of transactions</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MaxAmount" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Maximum allowed total transaction amount for a specified period</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MaxAmountPcnt" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Maximum allowed transaction amount as a percentage of the amount available of the contract's corresponding balance type or credit limit</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MaxSingleAmount" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Maximum allowed amount of a single transaction. A zero value in the field means that there are no limitations</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="MinTrnAmount" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Minimum transaction amount to which usage limiters are applied</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MaxTrnAmount" type="W4D_Amount">
+                            <xs:annotation>
+                                <xs:appinfo>Maximum transaction amount to which usage limiters are applied</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>Amount currency</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_TariffData">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="TariffDomains">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="TariffDomain" type="W4F_TariffDomain"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_TariffDomain">
+        <xs:annotation>
+            <xs:appinfo>In a tariff domain, users specify numeric values for each tariff in the domain and the effective and expiration dates of tariff numeric values.</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="UniqueCode" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Tariff domain unique code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Tariff domain name</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsPersonal" type="W4D_YesNo">
+                <xs:annotation>
+                    <xs:appinfo>Shows whether this is a personal tariff domain</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ApplyRules" type="W4D_Text"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Tariffs" type="W4T_Tariffs"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_TariffData">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="TariffDomains">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="TariffDomain" type="W4T_TariffDomain"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_Tariffs">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Tariff">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Ageing" type="W4T_AgeingTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up due normalisation parameters in account templates and, for instance, to calculate minimum payments during credit Product setup</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="BillingScheme" type="W4T_BillingSchemeTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up billing cycle parameters.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="GLNumber" type="W4T_GLNumberTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used during account template setup to specify GL account numbers.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="InstalmentFee" type="W4T_InstalmentFeeTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up instalment loan fee parameters.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="InstalmentScheme" type="W4T_InstalmentSchemeTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up parameters of instalment schemes that generate instalment plans.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Interest" type="W4T_InterestTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up interest rates in account templates.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="InterestTax" type="W4T_InterestTaxTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used during setup of tariffs with the "Interest" role to specify interest rates of the financial gain tax for gain received in the form of deposit interest or saving on loan interest.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Service" type="W4T_ServiceTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up fee calculation rules in Services.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ServiceLimit" type="W4T_ServiceLimitTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up Services for calculating the maximum and minimum transaction amount, to specify account balance limitations (e.g. when a deposit Product with a floating interest rate is set up), and to specify limitations related to Events that open or close when the value of a specific balance type changes.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ServiceValueDays" type="W4T_ServiceValueDaysTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up fields Value Days and Expiry Days in Services.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Usage" type="W4T_UsageTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up usage limiter parameters.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Threshold" type="W4T_ThresholdTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up various threshold values.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Technical" type="W4T_TechnicalTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up various other values depending on context.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Conversion" type="W4T_ConversionTariffRole">
+                            <xs:annotation>
+                                <xs:appinfo>Used to set up various conversion values.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_ServiceTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up fee calculation rules in Services.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_ServiceApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeBase" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Additional fee whose charge is mandatory and not depending on a fee rate</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeMin" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum fee amount that will be charged regardless of a transaction amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeMax" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum transaction fee amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeePcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Fee rate</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="IncreasePcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Percentage added to authorisation and clearing amounts sent to the issuer</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Fee currency</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="SpecialParms" type="W4D_String"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_TariffGeneric">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="TariffCode" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="TariffCodeExt" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Tariff unique code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TariffTypeExt" type="W4D_String"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="EventType" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="LimitTariffCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Tariff with the "Service Limit" role registered in the system. If the field is filled in, the account balance limiter is taken into consideration during tariff use.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PreferenceTypeCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Preference types registered in the system</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ApplyRules" type="W4D_String"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="TableRules" type="W4D_Text"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_UsageTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up usage limiter parameters.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_UsageApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxNumber" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum allowed number of transactions</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum allowed total transaction amount for a specified period</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxAmountPcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum allowed transaction amount as a percentage of the amount available of the contract's corresponding balance type or credit limit</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxSingleAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum allowed amount of a single transaction. A zero value in the field means that there are no limitations</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MinTrnAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum transaction amount to which usage limiters are applied</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxTrnAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum transaction amount to which usage limiters are applied</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Amount currency</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_ServiceValueDaysTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up fields Value Days and Expiry Days in Services.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_ServiceValueDaysApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ValueDays" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Transaction payment time shift in days</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_ServiceLimitTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up Services for calculating the maximum and minimum transaction amount, to specify account balance limitations (e.g. when a deposit Product with a floating interest rate is set up), and to specify limitations related to Events that open or close when the value of a specific balance type changes.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_ServiceLimitApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum allowed transaction amount or account balance, or maximum threshold value of an Event related to balance type value changes. A zero value in the field means that there are no limitations</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MinAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum allowed transaction amount or account balance or minimum threshold value of an Event related to balance type value changes. A zero value in the field means that there are no limitations</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FloorLimit" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum allowed transaction without authorization </xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Limiter currency</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ExpiryPeriod" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Expiry period</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ServicePriority" type="W4D_Counter"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_InterestTaxTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used during setup of tariffs with the "Interest" role to specify interest rates of the financial gain tax for gain received in the form of deposit interest or saving on loan interest.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_InterestTaxApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="BaseRate" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Base rate for calculating the threshold value of the financial gain tax rate.</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="TaxRate" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Tax rate</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="BaseRateMultiplier" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Factor by which the base rate must be multiplied to calculate the threshold value over which the financial gain tax is charged</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="BaseRateAddPoints" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Percentage that must be added to the base rate to calculate the threshold value over which the financial gain tax is charged</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_InterestTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up interest rates in account templates.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_InterestApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="RatePcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Interest rate</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeRatePcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Fee rate charged from the revenue in the form of deposit account interest</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_InstalmentSchemeTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up parameters of instalment schemes that generate instalment plans.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_InstalmentSchemeApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MinDealAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum amount of an initial transaction</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxDealAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum amount of an initial transaction</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DueMode" type="W4D_InstSchemeTrfDueMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DuePeriod" type="W4D_Counter"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MinInstAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum amount of an instalment in an instalment plan</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MaxInstAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum amount of an instalment in an instalment plan</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="TenorDefault" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Default number of instalment months</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="TenorMin" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum number of instalment months</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="TenorMax" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum number of instalment months</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ShiftPlan" type="W4D_Amount"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Currency in which limitations of an initial transaction amount and an instalment amount are specified</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="SpecialParms" type="W4D_String">
+                                    <xs:annotation>
+                                        <xs:appinfo>Special parameters of the instalment scheme</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_InstalmentFeeTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up instalment loan fee parameters.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_InstalmentFeeApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeMin" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum fee amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeMax" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Maximum fee amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeBase" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Base fee amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeRatePcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Fee percentage</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Fee currency</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_GLNumberTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used during account template setup to specify GL account numbers.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_GLNumberApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="GLNumber" type="W4D_LongCode">
+                                    <xs:annotation>
+                                        <xs:appinfo>GL account number used for synthetic accounting of analytic accounts com.openway.way4ufx.generated using this template</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_BillingSchemeTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up billing cycle parameters.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_BillingApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="BillingDay" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Shift of billing cycle end date</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MinBilling" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum number of days in a billing cycle</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="OVLTolerancePcnt" type="W4D_Amount"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="OVLToleranceAmount" type="W4D_Amount"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="AmountCurrency" type="W4D_Currency"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_AgeingTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up due normalisation parameters in account templates and, for instance, to calculate minimum payments during credit Product setup</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_AgeingApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking dates of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DuePeriod" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Used to determine the date of normalisation</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="GracePeriod" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Used to specify the delay before generating a due normalisation accounting transfer</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MinRepayment" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>If the account balance (or the account balance multiplied by the value of the Repayment Pcnt field) is less than the value specified in the Min Repayment field, funds are not transferred to the account specified in the Due Template field of the account template</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="MinRqRepayment" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Minimum amount that must be transferred to the account specified in the Due Template field of the account template</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="RepaymentPcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Percentage that must be transferred to the account specified in the Due Template field of the account template</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_ThresholdTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up various threshold values.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ThresholdAmount" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Threshold amount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ThresholdPcnt" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Threshold percentage</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>Currency of the amount set in the ThresholdAmount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_ThresholdTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up various threshold values.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_ThresholdApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking date of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ThresholdAmount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Threshold amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ThresholdPcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Threshold percentage</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Currency of the amount set in the ThresholdAmount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_TechnicalTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up various other values depending on context.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Amount" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Amount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>Currency of the amount set in the Amount</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Rate" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Percentage</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Counter" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Counter</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_TechnicalTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up various other values depending on context.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_TechnicalApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking date of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Amount" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Currency of the amount set in the Amount</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Rate" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Percentage</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Counter" type="W4D_Counter">
+                                    <xs:annotation>
+                                        <xs:appinfo>Counter</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_ConversionTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up various conversion values.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4F_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FXRateType" type="W4D_FXRateType"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                        <xs:annotation>
+                            <xs:appinfo>Conversion currency</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="FeeRatePcnt" type="W4D_Amount">
+                        <xs:annotation>
+                            <xs:appinfo>Fee percentage</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_ConversionTariffRole">
+        <xs:annotation>
+            <xs:appinfo>Used to set up various conversion values.</xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="W4T_TariffGeneric">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="NumericValues">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="ApplyMode" type="W4D_ConversionApplyMode"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>Specifies the effective banking date of the tariff's numeric values</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FXRateType" type="W4D_FXRateType"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                                    <xs:annotation>
+                                        <xs:appinfo>Conversion currency</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FeeRatePcnt" type="W4D_Amount">
+                                    <xs:annotation>
+                                        <xs:appinfo>Fee percentage</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

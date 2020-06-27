@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="../WAY4Types.xsd"/>
+    <xs:complexType name="W4F_BaseFileTrailer">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="CheckSum" type="W4F_CheckSum">
+                <xs:annotation>
+                    <xs:documentation>File check sum</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Outward</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="1" name="LoadingStatus" type="W4D_LoadingStatus">
+                    <xs:annotation>
+                        <xs:appinfo>File loading status:"FILE REJECTED"  file rejected;"FILE ACCEPTED"  file accepted;"FILE ACCEPTED PARTIALLY"  file was partially accepted; some Docs were rejected.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4C_Status">
+                    <xs:annotation>
+                        <xs:appinfo>File errors. It is present, if the file was rejected</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Batches in File total</xs:documentation>
+                    </xs:annotation>
+                    <xs:element maxOccurs="1" minOccurs="1" name="NOfAcceptedBatches" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Number of accepted Docs</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="NOfPartiallyAcceptedBatches" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Number of accepted Docs</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="NOfRejectedBatches" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Number of rejected Docs</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Records in File total</xs:documentation>
+                    </xs:annotation>
+                    <xs:element maxOccurs="1" minOccurs="1" name="NOfAcceptedRecs" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Number of accepted Docs</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="NOfRejectedRecs" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Number of rejected Docs</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_CheckSum">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="BatchesCount" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:documentation>Count of batches in the File</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="RecsCount" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:documentation>Count of single items in the File</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="HashTotalAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:documentation>File total amount</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_FileHeader">
+        <xs:complexContent>
+            <xs:extension base="W4F_OriginalFileHeader">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="OriginalFileHeader" type="W4F_OriginalFileHeader"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4F_OriginalFileHeader">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="FileLabel" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>File label defines type of the file content.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="FormatVersion" type="W4D_Version">
+                <xs:annotation>
+                    <xs:appinfo>File format version: 2.0</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Sender" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Sender code. The code from the "Member ID" field of the BIN table ("Full \ Configuration Setup \ Routing \ BIN Groups \ [BIN Table]")</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="CreationDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>File creation date.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="CreationTime" type="W4D_Time">
+                <xs:annotation>
+                    <xs:appinfo>File creation time.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="FileSeqNumber" type="W4D_Counter">
+                    <xs:annotation>
+                        <xs:appinfo>Sequential file number within the creation date.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Number" type="W4D_Counter">
+                    <xs:annotation>
+                        <xs:appinfo>Sequential file number within the creation date.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Receiver" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>ID of financial institution assigned to the
+Doc. Codes are defined in the Branch
+Code field of the Financial Institutions table
+("Full \ Configuration Setup \ Main Tables \
+Financial Institutions").</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Institution" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>ID of financial institution assigned to the
+application. Codes are defined in the Branch
+Code field of the Financial Institutions table
+("Full \ Configuration Setup \ Main Tables \
+Financial Institutions").</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="InstitutionIDType" type="W4C_InstitutionIDType">
+                        <xs:annotation>
+                            <xs:appinfo>Type of financial institution identification. Possible values: "Branch" - identification by Branch_Code; "Bank"- identification by Bank_Code; "CB" - identification by CB_Code</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Institution" type="W4D_Code">
+                        <xs:annotation>
+                            <xs:appinfo>ID of financial institution assigned to the
+application. Codes are defined in the Branch
+Code field of the Financial Institutions table
+("Full \ Configuration Setup \ Main Tables \
+Financial Institutions").</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4R_FileTrailer">
+        <xs:complexContent>
+            <xs:restriction base="W4F_BaseFileTrailer">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="CheckSum" type="W4F_CheckSum">
+                        <xs:annotation>
+                            <xs:documentation>File check sum</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Outward</xs:documentation>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="1" name="LoadingStatus" type="W4D_LoadingStatus">
+                            <xs:annotation>
+                                <xs:appinfo>File loading status:"FILE REJECTED"  file rejected;"FILE ACCEPTED"  file accepted;"FILE ACCEPTED PARTIALLY"  file was partially accepted; some Docs were rejected.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4C_Status">
+                            <xs:annotation>
+                                <xs:appinfo>File errors. It is present, if the file was rejected</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:sequence maxOccurs="1" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Batches in File total</xs:documentation>
+                            </xs:annotation>
+                            <xs:element maxOccurs="1" minOccurs="1" name="NOfAcceptedBatches" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Number of accepted Docs</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="NOfPartiallyAcceptedBatches" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Number of accepted Docs</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="NOfRejectedBatches" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Number of rejected Docs</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Records in File total</xs:documentation>
+                            </xs:annotation>
+                            <xs:element maxOccurs="1" minOccurs="1" name="NOfAcceptedRecs" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Number of accepted Docs</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="NOfRejectedRecs" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Number of rejected Docs</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="FileHeader" type="W4F_FileHeader"/>
+    <xs:element name="FileTrailer" type="W4R_FileTrailer"/>
+</xs:schema>

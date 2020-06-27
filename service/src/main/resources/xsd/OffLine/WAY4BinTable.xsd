@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="WAY4FileTypes.xsd"/>
+    <xs:complexType name="W4T_MemberInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="MemberId" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Top level member identifier under which Issuer BINs and Acquirer BINs can be present</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Member name</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ProcessorId" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Processor identifier of current member. If Member does not have Processor this tag must not be present</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Country" type="W4D_Country">
+                <xs:annotation>
+                    <xs:appinfo>Country where Member is registered</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="IssInfo" type="W4T_IssInfo">
+                <xs:annotation>
+                    <xs:appinfo>IssuerBIN and account ranges under it issued by current Member</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="AcqInfo" type="W4T_AcqInfo">
+                <xs:annotation>
+                    <xs:appinfo>AcquirerBIN</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_AcqInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="AcquirerBIN" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>AcquirerBIN should be used on routing</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_IssInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="IssuerBIN" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>IssuerBIN should be used on routing</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="AccountRange" type="W4T_AccountRange"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_AccountRange">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="AccountRangeLow" type="W4D_String"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="AccountRangeHigh" type="W4D_String"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="PANLength" type="W4D_Counter"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="CDVAlgorithm" type="W4D_Tag">
+                <xs:annotation>
+                    <xs:appinfo>Check digit algorithm applied to current account range</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Product" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_MemberListFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader" type="W4T_BINTableFileHeader"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="MemberList" type="W4T_MemberList"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileTrailer" type="W4F_BaseFileTrailer">
+                <xs:annotation>
+                    <xs:appinfo>FileTrailer contains CheckSum/RecsCount with count of Member tags</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_MemberList">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Member" type="W4T_MemberInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_BINTableFileHeader">
+        <xs:complexContent>
+            <xs:extension base="W4F_FileHeader">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="TestInd" type="W4D_YesNo">
+                        <xs:annotation>
+                            <xs:appinfo>Indicator showing is current file is test file: Y - current file is test file, N - current file is production file</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MemberListFile" type="W4T_MemberListFile">
+        <xs:annotation>
+            <xs:appinfo>MemberListFile serves for transmission of whole bin table data.</xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>

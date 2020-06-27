@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified" ow:feature="Configuration">
+    <xs:include schemaLocation="../Application/WAY4Appl.xsd"/>
+    <xs:complexType name="W4C_DigitalContentRsType">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:documentation>Prepaid Service Code</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:documentation>Prepaid Service Name in ADD_SERV_TYPE</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ExternalName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:documentation>Prepaid Service Name to be shown to clients (may be specific for group) </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4C_CurrencyAmount">
+                <xs:annotation>
+                    <xs:documentation>Prepaid Service price</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Status">
+                <xs:annotation>
+                    <xs:documentation>Current status of PrePaid Service Type distribution.
+Active - codes are available;
+InActive - codes are not available;
+Suspended - distribution of this code type is suspended</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Active"/>
+                        <xs:enumeration value="InActive"/>
+                        <xs:enumeration value="Suspended"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:documentation>Additional Prepaid Service information. Parm/ParmType is reserved for future use</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_ProductExt">
+        <xs:complexContent>
+            <xs:extension base="W4C_Product">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="SubProducts">
+                        <xs:annotation>
+                            <xs:documentation>Subproduct information</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="1" name="SubProductRs" type="W4C_ProductExt"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_Rate">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="ExchangeTypeCode" type="W4D_Code"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="ExchangeTypeName" type="W4D_Name"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="CurrencyFrom" type="W4D_Currency">
+                    <xs:annotation>
+                        <xs:documentation>Currency from</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="CurrencyTo" type="W4D_Currency">
+                    <xs:annotation>
+                        <xs:documentation>Currency To</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="SellRate" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                        <xs:documentation>Sell Rate</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="BuyRate" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                        <xs:documentation>Buy Rate</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="MiddleRate" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                        <xs:documentation>Middle Rate</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="CBRate" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                        <xs:documentation>Centre Bank Rate</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="ActiveFromDt" type="W4D_DateTime">
+                    <xs:annotation>
+                        <xs:documentation>The Rate is active from the Date Time specified</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4D_Code">
+                <xs:annotation>
+                    <xs:documentation>Status of this particular exchange rate. Possible values:
+ - Active - rate is active right now
+ - Inactive - rate was active some time ago and possibly was used for already completed payments
+ - Closed - rate was never active and won't. For example, rates were loaded for 1, 2, 3 of March and ones for 3 were activated. Those for 1 and 2 of March will be Closed.
+ - Waiting - originally loaded rate which is not activated yet. For example, becomes active in the future.
+ - Posted - originally loaded rate which was activated already. On activation the separate copy is created with Active status and possibly different values.
+ - History - specific, rarely used
+</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_Configuration">
+        <xs:complexContent>
+            <xs:extension base="W4T_ApplBase">
+                <xs:sequence>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" name="Source" type="W4C_Contractor">
+                            <xs:annotation>
+                                <xs:documentation>Number of terminal sending the request</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ObjectFor" type="W4C_ObjectFor">
+                            <xs:annotation>
+                                <xs:documentation>Object ID. Used to search for the object in the
+database.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="DataRs">
+                            <xs:annotation>
+                                <xs:documentation> Response Data on the requested object.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element maxOccurs="unbounded" minOccurs="1" name="PrePaidServiceTypeRs" ow:feature="Configuration_PrePaidServiceType" type="W4C_DigitalContentRsType">
+                                        <xs:annotation>
+                                            <xs:documentation>Prepaid service type information</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="unbounded" minOccurs="1" name="ProductRs" ow:feature="Configuration_Product" type="W4C_ProductExt">
+                                        <xs:annotation>
+                                            <xs:documentation>Complete product information</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="unbounded" minOccurs="1" name="ExchangeRateRs" ow:feature="Configuration_ExchangeRate" type="W4C_Rate">
+                                        <xs:annotation>
+                                            <xs:documentation>Exchange rates information</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4C_Status">
+                            <xs:annotation>
+                                <xs:documentation>Status Information</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="ConfigurationInfo" type="W4T_Configuration"/>
+</xs:schema>

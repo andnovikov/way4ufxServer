@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="../WAY4UFX_Validation.xsd"/>
+    <xs:simpleType name="W4D_Boolean">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Integer">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:complexType name="W4C_CassetteInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Key" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_String"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Dir">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="D"/>
+                        <xs:enumeration value="C"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="ItemType" type="W4D_Code"/>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_Amount"/>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="DispCount" type="W4D_Counter"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="ChkDispCount" type="W4D_Counter"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="LoadedCount" type="W4D_Counter"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_CycleInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="CycleN" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Cassettes">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="Cassette" type="W4C_CassetteInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4CT_Operation">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="OperCode" type="W4D_Code"/>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Application" type="W4T_Application"/>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="Doc" type="W4U_Doc"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Routing" type="W4CT_Routing"/>
+                </xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="1" name="Information" type="W4T_Information"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="Security" type="W4S_Security"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="CustomerProfile" type="W4P_CustomerProfile"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="ProfileInfo" type="W4O_ProfileInfo"/>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="Parms" type="W4C_ParmSet"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="W4D_String" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="W4CT_Routing">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="CardChannel" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="OnlineAuth" type="W4D_Tag"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4CT_Trx">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="UFXMsg" type="W4M_Msg">
+                <xs:annotation>
+                    <xs:documentation>Source message, which initiates transaction</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Oper" type="W4CT_Operation">
+                <xs:annotation>
+                    <xs:documentation>Operations, com.openway.way4ufx.generated and handled by specialized task</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OperationMotor" type="W4C_Any">
+                <xs:annotation>
+                    <xs:documentation>Operation motor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="operCounter" type="W4D_Integer" use="optional"/>
+        <xs:attribute name="reverseStarted" type="W4D_Boolean" use="optional"/>
+        <xs:attribute name="lastExecOper" type="W4D_Integer" use="optional"/>
+        <xs:attribute name="resultState" type="W4D_String" use="optional"/>
+        <xs:attribute name="operRqChain" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="xs:string"/>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="operRsChain" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="xs:string"/>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="operRevChain" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="xs:string"/>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="operChannels" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="xs:string"/>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="inCallback" type="W4D_String" use="optional"/>
+        <xs:attribute name="selectedBranch" type="W4D_String" use="optional"/>
+    </xs:complexType>
+    <xs:element name="Address" type="W4C_Address"/>
+    <xs:element name="AffiliatedSystems" type="W4P_AffiliatedSystems"/>
+    <xs:element name="Client" type="W4O_Client"/>
+    <xs:element name="Contractor" type="W4DC_Contractor"/>
+    <xs:element name="ContractRs" type="W4O_ContractRs"/>
+    <xs:element name="ContractRsList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="ContractRs" type="W4O_ContractRs"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CycleInfo" type="W4C_CycleInfo"/>
+    <xs:element name="HandBookItem" type="W4O_HandBookItem"/>
+    <xs:element name="Letter" type="W4P_Letter"/>
+    <xs:element name="Letters" type="W4P_Letters"/>
+    <xs:element name="Menu" type="W4P_Menu"/>
+    <xs:element name="MenuItem" type="W4P_MenuItem"/>
+    <xs:element name="MenuItems" type="W4O_MenuItems"/>
+    <xs:element name="Operation" type="W4P_Operation"/>
+    <xs:element name="OperationContext" type="W4P_OperationContextRs"/>
+    <xs:element name="Operations" type="W4P_Operations"/>
+    <xs:element name="ParmSet" type="W4C_ParmSet"/>
+    <xs:element name="Phase" type="W4P_PhaseBase"/>
+    <xs:element name="PrepaidServiceTypesList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="PrePaidServiceTypeRs" type="W4C_DigitalContentRsType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ProcessingRules" type="W4P_Rules"/>
+    <xs:element name="Properties" type="W4P_PropertiesData"/>
+    <xs:element name="Property" type="W4P_PropertyBase"/>
+    <xs:element name="Service" type="W4O_Service"/>
+    <xs:element name="ServiceIDT" type="W4P_ServiceIDT"/>
+    <xs:element name="Template" type="W4P_Template"/>
+    <xs:element name="Templates" type="W4P_Templates"/>
+    <xs:element name="Trx" type="W4CT_Trx">
+        <xs:annotation>
+            <xs:documentation>Comment describing your root element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>
