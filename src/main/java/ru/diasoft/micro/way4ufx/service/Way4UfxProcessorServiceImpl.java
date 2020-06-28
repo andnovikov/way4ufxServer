@@ -44,7 +44,7 @@ public class Way4UfxProcessorServiceImpl implements Way4UfxProcessorService {
 
                 try {
                     StringResult result = new StringResult();
-                    JAXBElement<W4MMsg> jaxbElement = new JAXBElement<>(new QName(W4MMsg.class.getSimpleName()), W4MMsg.class, w4MMsgResult);
+                    JAXBElement<W4MMsg> jaxbElement = new JAXBElement<>(new QName("UFXMsg"), W4MMsg.class, w4MMsgResult);
                     jaxb2Marshaller.marshal(jaxbElement, result);
                     return result.toString();
                 } catch (Exception e) {
