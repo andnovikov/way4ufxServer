@@ -78,8 +78,8 @@ public class Way4UfxProcessorServiceImpl implements Way4UfxProcessorService {
 
                 cardContract = cardContractService.save(cardContract);
             } else {
-                long curLimit = cardContract.getLimit().longValue();
-                long increment = w4MMsg.getMsgData().getDoc().getTransaction().getAmount().longValue();
+                double curLimit = cardContract.getLimit().doubleValue();
+                double increment = w4MMsg.getMsgData().getDoc().getTransaction().getAmount().doubleValue();
                 cardContract.setLimit(BigDecimal.valueOf(curLimit + increment));
 
                 cardContract = cardContractService.save(cardContract);
@@ -92,8 +92,8 @@ public class Way4UfxProcessorServiceImpl implements Way4UfxProcessorService {
             if (cardContract == null) {
                 setStatus(w4MMsg, "Error", 14, "No such card");
             } else {
-                long curLimit = cardContract.getLimit().longValue();
-                long increment = w4MMsg.getMsgData().getDoc().getTransaction().getAmount().longValue();
+                double curLimit = cardContract.getLimit().doubleValue();
+                double increment = w4MMsg.getMsgData().getDoc().getTransaction().getAmount().doubleValue();
                 if (curLimit < increment) {
                     setStatus(w4MMsg, "Error", 51, "Not sufficient funds");
                 } else {
