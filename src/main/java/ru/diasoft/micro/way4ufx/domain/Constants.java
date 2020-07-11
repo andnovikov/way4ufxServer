@@ -1,4 +1,4 @@
-package ru.diasoft.micro.way4ufx.model;
+package ru.diasoft.micro.way4ufx.domain;
 
 /**
  * UFXMsg.MsgData.Doc.TransType.TransCode.MsgCode

@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <property name="autoIncrement" value="false" dbms="postgresql,mssql,oracle"/>
+    <property name="autoIncrement" value="true" dbms="h2"/>
+
+    <changeSet author="anovikov" id="1594470887550-1">
+        <createSequence sequenceName="tcardcontract_cardcontractid_seq"/>
+    </changeSet>
+    <changeSet author="anovikov" id="1594470887550-2">
+        <createSequence sequenceName="tcardoperation_cardcontractid_seq"/>
+    </changeSet>
+
+    <changeSet author="anovikov" id="1594470887550-3">
+        <createTable tableName="tCardContract">
+            <column name="CardContractId" type="numeric(19, 0)" autoIncrement="${autoIncrement}"
+                    defaultValueSequenceNext="tcardcontract_cardcontractid_seq">
+                <constraints primaryKey="true" primaryKeyName="tCardContract_pkey"/>
+            </column>
+            <column name="CardNumber" type="VARCHAR(255)"/>
+            <column name="ClientId" type="numeric(19, 0)"/>
+            <column name="ContractNumber" type="VARCHAR(255)"/>
+            <column name="CreditLimit" type="numeric(19, 2)"/>
+            <column name="CurrencyId" type="numeric(19, 0)"/>
+            <column name="Limit" type="numeric(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="anovikov" id="1594470887550-4">
+        <createTable tableName="tCardOperation">
+            <column name="CardOperationId" type="numeric(19, 0)" autoIncrement="${autoIncrement}"
+                    defaultValueSequenceNext="tcardoperation_cardcontractid_seq">
+                <constraints primaryKey="true" primaryKeyName="tCardOperation_pkey"/>
+            </column>
+            <column name="CardAmount" type="numeric(19, 2)"/>
+            <column name="CardContractId" type="numeric(19, 0)"/>
+            <column name="CurrencyId" type="numeric(19, 0)"/>
+            <column name="DateProcessing" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="OperationAmount" type="numeric(19, 2)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

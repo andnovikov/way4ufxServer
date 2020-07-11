@@ -1,0 +1,38 @@
+server:
+  port: ${SERVICE_PORT}
+
+eureka:
+  client:
+    enabled: ${EUREKA_CLIENT_ENABLED}
+    registerWithEureka: ${EUREKA_CLIENT_ENABLED}
+    serviceUrl:
+      defaultZone: ${EUREKA_URL}
+  instance:
+    prefer-ip-address: ${EUREKA_PREFEREDIP_ENABLED}
+
+spring:
+  datasource:
+    driverClassName: ${DB_DRIVER}
+    url: ${DB_URL}
+    username: ${DB_LOGIN}
+    password: ${DB_PASSWORD}
+
+    hikari:
+      connection-test-query: ${DB_TEST_QUERY}
+
+  jpa:
+    database-platform: ${JPA_DIALECT}
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        globally_quoted_identifiers: ${DB_QUOTED_IDENTIFIERS:false}
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  liquibase:
+    change-log: classpath:liquibase/rootChangeLog.xml

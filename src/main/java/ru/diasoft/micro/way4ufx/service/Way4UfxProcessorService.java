@@ -1,9 +1,11 @@
 package ru.diasoft.micro.way4ufx.service;
 
-import ru.diasoft.micro.way4ufx.model.W4MMsg;
+import ru.diasoft.micro.way4ufx.domain.W4MMsg;
 
 public interface Way4UfxProcessorService {
 
-    String processRequest(String requestBody);
+    W4MMsg processRequestDoc(W4MMsg w4MMsg);
+
+    W4MMsg processRequestApplication(W4MMsg w4MMsg);
 
 }
