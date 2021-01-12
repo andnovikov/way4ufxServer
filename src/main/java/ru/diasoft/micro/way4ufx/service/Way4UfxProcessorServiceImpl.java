@@ -148,21 +148,35 @@ public class Way4UfxProcessorServiceImpl implements Way4UfxProcessorService {
             }
         }
 
-        /*
-        ||
-            msgCode.equals(Constants.MSG_04000F) ||
-            msgCode.equals(Constants.MSG_04200P) ||
-            msgCode.equals(Constants.MSG_04200F) ||
-            msgCode.equals(Constants.MSG_BILLING_PAYMENT_WITH_CARD) ||
-            msgCode.equals(Constants.MSG_BILLING_PAYMENT_BILLER_CHECK))
-         */
-
         return w4MMsg;
     }
 
     @Override
     public W4MMsg processRequestApplication(W4MMsg w4MMsg) {
-        return null;
+        W4MMsg result = new W4MMsg();
+        final W4TApplication app = w4MMsg.getMsgData().getApplication();
+
+        result.setMsgId(w4MMsg.getMsgId());
+        result.setSource(w4MMsg.getSource());
+
+        W4MMsgData resData = new W4MMsgData();
+        W4TApplication resApp = new W4TApplication();
+        resData.setApplication(resApp);
+
+        resApp.setRegNumber(app.getRegNumber());
+        resApp.setObjectType(app.getObjectType());
+        resApp.setActionType(app.getActionType());
+
+        W4CApplStatus resStatus = new W4CApplStatus();
+        resApp.setStatus(resStatus);
+
+        resStatus.setRespClass("Information");
+        resStatus.setRespCode(Long.valueOf(0));
+        resStatus.getRespText().add("Successfully processed");
+
+        result.setMsgData(resData);
+
+        return result;
     }
 
     private void setStatus(final W4MMsg reqMsg, final String respClass, final int respCode, final String msg) {
