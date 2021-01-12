@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.xml.transform.StringResult;
 import org.springframework.xml.transform.StringSource;
@@ -29,8 +30,14 @@ public class Way4UfxController {
         this.jaxb2Marshaller = jaxb2Marshaller;
     }
 
+    @RequestMapping(value = "/")
+    public String home() {
+        return "";
+    }
+
     @PostMapping("/test")
     public String test(@RequestBody String requestBody){
+        log.info("Start processing with test");
         W4MMsg w4MMsgResult = new W4MMsg();
         try {
             JAXBElement<W4MMsg> w4MMsgJAXBElement = (JAXBElement<W4MMsg>) jaxb2Marshaller.unmarshal(new StringSource(requestBody));

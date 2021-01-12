@@ -69,6 +69,22 @@ public class Way4UfxProcessorServiceImpl implements Way4UfxProcessorService {
 
         if (msgCode.equals(Constants.MSG_02000F)) {
             if (cardContract == null) {
+                setStatus(w4MMsg, "Error", 14, "No such card");
+            } else {
+                double curLimit = cardContract.getLimit().doubleValue();
+                double increment = w4MMsg.getMsgData().getDoc().getTransaction().getAmount().doubleValue();
+                if (curLimit < increment) {
+                    setStatus(w4MMsg, "Error", 51, "Not sufficient funds");
+                } else {
+                    cardContract.setLimit(BigDecimal.valueOf(curLimit - increment));
+                    cardContract = cardContractService.save(cardContract);
+                    setStatus(w4MMsg, "Information", 0, "Successfully processed");
+                }
+            }
+        }
+
+        if (msgCode.equals(Constants.MSG_02200P)) {
+            if (cardContract == null) {
                 cardContract = new CardContract();
                 cardContract.setCardNumber(w4MMsg.getMsgData().getDoc().getRequestor().getContractNumber());
                 cardContract.setContractNumber(w4MMsg.getMsgData().getDoc().getRequestor().getContractNumber());
@@ -86,22 +102,6 @@ public class Way4UfxProcessorServiceImpl implements Way4UfxProcessorService {
             }
 
             setStatus(w4MMsg, "Information", 0, "Successfully processed");
-        }
-
-        if (msgCode.equals(Constants.MSG_02200P)) {
-            if (cardContract == null) {
-                setStatus(w4MMsg, "Error", 14, "No such card");
-            } else {
-                double curLimit = cardContract.getLimit().doubleValue();
-                double increment = w4MMsg.getMsgData().getDoc().getTransaction().getAmount().doubleValue();
-                if (curLimit < increment) {
-                    setStatus(w4MMsg, "Error", 51, "Not sufficient funds");
-                } else {
-                    cardContract.setLimit(BigDecimal.valueOf(curLimit - increment));
-                    cardContract = cardContractService.save(cardContract);
-                    setStatus(w4MMsg, "Information", 0, "Successfully processed");
-                }
-            }
         }
 
         // Получение остатков
