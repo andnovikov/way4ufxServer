@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="../WAY4Types.xsd"/>
+    <xs:complexType name="W4T_OfficerTemporarilyInactive">
+        <xs:complexContent>
+            <xs:restriction base="W4C_DateInterval">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                        <xs:annotation>
+                            <xs:appinfo>The initial date of the activity period</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DateTo" type="W4D_Date">
+                        <xs:annotation>
+                            <xs:appinfo>The ending date of the activity period, inclusive</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4T_OfficerAppl">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="RegNumber" type="W4D_ApplRegNumber">
+                <xs:annotation>
+                    <xs:appinfo>Registration Number. Max length is 64 chars.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ObjectType">
+                <xs:annotation>
+                    <xs:appinfo>Application object:
+"Officer"- Officer record</xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Officer"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ActionType">
+                <xs:annotation>
+                    <xs:appinfo>Actions applied to the object: "Add" - add object, "Update" - update object,"ResetPassword" - request to reset Officer Password</xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Add"/>
+                        <xs:enumeration value="Update"/>
+                        <xs:enumeration value="ResetPassword"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="ObjectFor">
+                    <xs:annotation>
+                        <xs:appinfo>ObjectFor aggregate contains a reference to an existent Object to be used in the Application</xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="OfficerIDT" type="W4D_Code">
+                                <xs:annotation>
+                                    <xs:appinfo>Officer indentidier. Codes are defined in the "User ID" field of the "Officer" table.
+</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Data">
+                    <xs:annotation>
+                        <xs:appinfo>Data on the application object.</xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="Officer" type="W4T_Officer">
+                                <xs:annotation>
+                                    <xs:appinfo>Officer data. Used if the application object is an Officer.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="DataRs">
+                    <xs:annotation>
+                        <xs:appinfo>Effective data about the officer after application processing</xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="Officer" type="W4T_Officer"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_AddInfo">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Data.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4C_ApplStatus">
+                <xs:annotation>
+                    <xs:appinfo>Loading status</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_OfficerAppls">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Institution" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="InstitutionIDType" type="W4C_InstitutionIDType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="OfficerApplication" type="W4T_OfficerAppl"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4T_Officer">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="OfficerIDT" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Officer indentidier. Codes are defined in the "User ID" field of the "Officer" table.
+</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>Officer Name. Name field of the "Officer" table.
+</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="GroupIDT" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Officer Group Identifier. Codes are defined in the "Name" field of the "Officer Group" table.
+</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="OfficerType">
+                    <xs:annotation>
+                        <xs:appinfo>Officer Type. Supported values: Administrator, Clerk, Auditor</xs:appinfo>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Administrator"/>
+                            <xs:enumeration value="Clerk"/>
+                            <xs:enumeration value="Auditor"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="WorkingTime" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Working time. See description about mask in WAY4 Cards documentation</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo">
+                    <xs:annotation>
+                        <xs:appinfo>Officer "is active" status. Supported value: Yes, No</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="TemporarilyInactive" type="W4T_OfficerTemporarilyInactive">
+                    <xs:annotation>
+                        <xs:appinfo>Officer Temporarily Inactive information</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_AddInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="OfficerApplication" type="W4T_OfficerAppl">
+        <xs:annotation>
+            <xs:appinfo>Application for an Officer modification</xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,16 @@
+<UFXMsg direction="Rs" msg_type="Application" scheme="WAY4Appl" version="2.0">
+	<MsgId>AAA-555-333-EEE-23124141</MsgId>
+	<Source app="Bank1"/>
+	<MsgData>
+		<Application>
+			<RegNumber>AA_XML_03_041</RegNumber>
+			<ObjectType>Status</ObjectType>
+			<ActionType>Update</ActionType>
+			<Status>
+				<RespClass>Information</RespClass>
+				<RespCode>0</RespCode>
+				<RespText>Successfully processed</RespText>
+			</Status>
+		</Application>
+	</MsgData>
+</UFXMsg>

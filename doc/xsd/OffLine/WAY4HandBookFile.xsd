@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="WAY4FileTypes.xsd"/>
+    <xs:include schemaLocation="../CustomerProfile/WAY4Profile.xsd"/>
+    <xs:complexType name="W4T_HandBookFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4F_FileHeader">
+                            <xs:sequence>
+                                <xs:sequence maxOccurs="1" minOccurs="1">
+                                    <xs:element maxOccurs="1" minOccurs="1" name="FileLabel" type="W4D_Code">
+                                        <xs:annotation>
+                                            <xs:appinfo>File label defines type of the file content. Supported values: "PR" - Payment receiver, "AV" - attribute values</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="FormatVersion" type="W4D_Version">
+                                        <xs:annotation>
+                                            <xs:appinfo>File format version: 2.0</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Sender" type="W4D_Code">
+                                        <xs:annotation>
+                                            <xs:appinfo>Sender code. The code from the "Member ID"
+field of the BIN table ("Full \ Configuration
+Setup \ Routing \ BIN Groups \ [BIN
+Table]") with its 3-character prefix removed.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="CreationDate" type="W4D_Date">
+                                        <xs:annotation>
+                                            <xs:appinfo>File creation date.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="CreationTime" type="W4D_Time">
+                                        <xs:annotation>
+                                            <xs:appinfo>File creation time.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:choice maxOccurs="1" minOccurs="1">
+                                        <xs:element maxOccurs="1" minOccurs="1" name="Number" type="W4D_Counter">
+                                            <xs:annotation>
+                                                <xs:appinfo>Sequential file number within the creation date.</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:choice>
+                                    <xs:choice maxOccurs="1" minOccurs="1">
+                                        <xs:element maxOccurs="1" minOccurs="1" name="Institution" type="W4D_Code">
+                                            <xs:annotation>
+                                                <xs:appinfo>ID of financial institution assigned to the
+application. Codes are defined in the Branch
+Code field of the Financial Institutions table
+("Full \ Configuration Setup \ Main Tables \
+Financial Institutions").</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:choice>
+                                </xs:sequence>
+                            </xs:sequence>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="HandBooks" type="W4P_HandBooksDir"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="HandBookFile" type="W4T_HandBookFile">
+        <xs:annotation>
+            <xs:documentation>HandBook file. The structure is used to copy HandBoooks</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>

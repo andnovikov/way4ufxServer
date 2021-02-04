@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="Security/WAY4USec.xsd"/>
+    <xs:include schemaLocation="Doc/WAY4UDoc.xsd"/>
+    <xs:include schemaLocation="Application/WAY4Appl.xsd"/>
+    <xs:include schemaLocation="CustomerProfile/WAY4Profile.xsd"/>
+    <xs:include schemaLocation="Configuration/WAY4Conf.xsd"/>
+    <xs:include schemaLocation="CustomerProfile/WAY4CPObsolete.xsd"/>
+    <xs:include schemaLocation="OfficerApplication/WAY4OfficerAppl.xsd"/>
+    <xs:complexType name="W4C_Officer">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="IDType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Officer identification type specifies type of an Officer identifier presented in Officer/Code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Role" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4M_MAC">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="MACValue" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>MAC</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="MACParam">
+                    <xs:annotation>
+                        <xs:appinfo>MAC parameters</xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="name" type="W4D_String" use="required">
+                                    <xs:annotation>
+                                        <xs:appinfo>Parameter Name</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4M_Msg">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="MsgId" type="W4D_MsgId">
+                <xs:annotation>
+                    <xs:appinfo>Message identifier. This identifier may be used by message sender for extended matching response messages with requests. It is recommended to generate value for this element basing on an "Universally Unique IDentifier (UUID) URN Namespace", RFC 4122 specification. This RFC may be downloaded from http://www.ietf.org/rfc/rfc4122.txt.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ChainMsgId" type="W4D_MsgId">
+                <xs:annotation>
+                    <xs:appinfo>Chain message Identifier. It is used in sequential messages to place the MsgId of the previous message. The format is the same as for MsgId.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ExtRefSet" type="W4C_RefSet">
+                <xs:annotation>
+                    <xs:appinfo>External Reference Numbers. It is used as an additional identifier of a message</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Source" type="W4M_Source">
+                    <xs:annotation>
+                        <xs:appinfo>Identifier of the Client Application that created the request</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="0" minOccurs="0" name="Transit" type="W4M_Router">
+                    <xs:annotation>
+                        <xs:appinfo>Transit Client Applications </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Target" type="W4M_Router">
+                    <xs:annotation>
+                        <xs:appinfo>Identifier of the Client Application that will process the request</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="MsgData" type="W4M_MsgData">
+                <xs:annotation>
+                    <xs:appinfo>Message Data. Contains a request of the application layer</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="MsgAuth" type="W4M_MsgAuth">
+                <xs:annotation>
+                    <xs:appinfo>Message Authentication information. For details, see section "Security"in the UFX specification.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="scheme" type="W4D_Code" use="optional">
+            <xs:annotation>
+                <xs:appinfo>Scheme name. The name specifies the scheme that will be used for xml validation. Supported values: WAY4Appl,  WAY4Appl, WAY4UDoc, WAY4USec, WAY4Profile. Value depends on msg_type attribute. The correspondence between attributes as follows:
+scheme="WAY4Appl" for msg_type="Application" , 
+scheme="WAY4Appl" for msg_type="Information", 
+scheme="WAY4UDoc" for msg_type="Doc",
+scheme="WAY4USec" for msg_type="Security",
+scheme="WAY4Profile" for msg_type="CustomerProfile"
+scheme="WAY4Appl" for msg_type="TariffData"
+scheme="WAY4OfficerAppl" for msg_type="OfficerApplication"
+</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="msg_type" type="W4D_Code" use="required">
+            <xs:annotation>
+                <xs:appinfo>Message Type. It defines the type of an application layer message. The value also defines the element which is presented in the UFXMsg/MsgData aggregate. Supported values:
+Application, Information, Doc, Security, CustomerProfile, etc.
+</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="direction" type="W4D_RqRs" use="optional">
+            <xs:annotation>
+                <xs:appinfo>Message direction. Supported values: Rq - request; Rs - response;  Notif - notification.</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="version" type="W4D_Version" use="required">
+            <xs:annotation>
+                <xs:appinfo>Format version</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="dialect" type="W4D_Code" use="prohibited"/>
+        <xs:attribute name="wf_type" type="W4D_Code" use="prohibited"/>
+        <xs:attribute name="session" type="W4D_Code" use="optional">
+            <xs:annotation>
+                <xs:appinfo>Session identifier</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="msg_num" type="W4D_Counter" use="prohibited">
+            <xs:annotation>
+                <xs:appinfo>Message number</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="resp_class" use="optional">
+            <xs:annotation>
+                <xs:appinfo>Message severity code. Supported values: 'F' -  Fatal Error, 'E' -  Error, 'I' - Information, or 'W' - Warning</xs:appinfo>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="F"/>
+                    <xs:enumeration value="E"/>
+                    <xs:enumeration value="W"/>
+                    <xs:enumeration value="I"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="resp_code" type="W4D_Counter" use="optional">
+            <xs:annotation>
+                <xs:appinfo>Response code. See following sections of UFX specification for details: "Chapter 5. Response Processing Guidelines", "Appendix 1. WAY4 UFX Response Codes". </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="resp_text" type="W4D_String" use="optional">
+            <xs:annotation>
+                <xs:appinfo>Response message. See following sections of UFX specification for details: "Chapter 5. Response Processing Guidelines", "Appendix 1. WAY4 UFX Response Codes". </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="W4M_MsgAuth">
+        <xs:choice>
+            <xs:element maxOccurs="1" minOccurs="1" name="MAC" type="W4M_MAC">
+                <xs:annotation>
+                    <xs:appinfo>Set of data as to the MAC signing of the request</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="skip">
+                <xs:annotation>
+                    <xs:appinfo>Signature element as described in  "http://www.w3.org/2000/09/xmldsig#"</xs:appinfo>
+                </xs:annotation>
+            </xs:any>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4M_MsgData">
+        <xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="Application" ow:feature="Application" type="W4T_Application"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Doc" ow:feature="Doc" type="W4U_Doc"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Information" ow:feature="Information" type="W4T_Information"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Security" ow:feature="Security" type="W4S_Security"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="ConfigurationInfo" ow:feature="Configuration" type="W4T_Configuration"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="CustomerProfile" ow:feature="CustomerProfile" type="W4P_CustomerProfile"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="ProfileInfo" ow:feature="ProfileInfo" type="W4O_ProfileInfo"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="TariffData" ow:feature="TariffData" type="W4F_TariffData"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="OfficerApplications" ow:feature="OfficerApplication" type="W4T_OfficerAppls"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4M_Router">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Officer" type="W4C_Officer"/>
+            <xs:choice maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo>Additional data specifies details about correspondent Application(Source, Target or Transit) and details about Officer authentication. Parm/ParmType is reserved for future use </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_Any"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="app" type="W4D_Code" use="required">
+            <xs:annotation>
+                <xs:appinfo>Client Application Identifier</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="role" type="W4D_String" use="optional">
+            <xs:annotation>
+                <xs:appinfo>Client Application Role</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="W4M_Source">
+        <xs:complexContent>
+            <xs:extension base="W4M_Router"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="UFXMsg" type="W4M_Msg"/>
+</xs:schema>

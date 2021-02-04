@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified" ow:feature="Security">
+    <xs:include schemaLocation="../WAY4Types.xsd"/>
+    <xs:complexType name="W4S_Security">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="RegNumber" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Registration Number</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Source" type="W4C_Contractor">
+                <xs:annotation>
+                    <xs:appinfo> Requestor Identifier</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Requestor" type="W4C_Contractor">
+                <xs:annotation>
+                    <xs:appinfo> Source Identifier</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ValidationDtls" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo>Request validation parameters. Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ResultDtls" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo> Result parameters specifying data necessary in the response. Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="NewSecurityData">
+                <xs:annotation>
+                    <xs:appinfo>Security Data</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4C_SecurityData">
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="1" name="SecParm" type="W4D_SecParm">
+                                    <xs:annotation>
+                                        <xs:appinfo>Security Parameters</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:appinfo>Response</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4C_Status">
+                    <xs:annotation>
+                        <xs:appinfo>Result Status. The element is used only in response message.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Security" type="W4S_Security"/>
+</xs:schema>

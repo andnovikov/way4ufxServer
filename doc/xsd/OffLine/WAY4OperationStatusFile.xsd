@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:include schemaLocation="WAY4FileTypes.xsd"/>
+    <xs:complexType name="W4F_OperationStatusFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader" type="W4F_OperationStatusFileHeader"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="OperationStatusList">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="OperationStatus" type="W4P_OperationStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_OperationStatusFileHeader">
+        <xs:complexContent>
+            <xs:restriction base="W4F_FileHeader">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" name="FormatVersion" type="W4D_Version">
+                            <xs:annotation>
+                                <xs:appinfo>File format version: 2.0</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="CreationDate" type="W4D_Date">
+                            <xs:annotation>
+                                <xs:appinfo>File creation date.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="CreationTime" type="W4D_Time">
+                            <xs:annotation>
+                                <xs:appinfo>File creation time.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:choice maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="1" name="FileSeqNumber" type="W4D_Counter">
+                                <xs:annotation>
+                                    <xs:appinfo>Sequential file number within the creation date.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_OperationStatus">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="ReferenceNumber" type="W4D_RegNumber">
+                <xs:annotation>
+                    <xs:appinfo>Operation reference number</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="PostingStatus" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>New posting status of the operation</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="CommentText" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Reason for setting the new posting status</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_OperationStatusNotification">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="ReferenceNumber" type="W4D_RegNumber">
+                <xs:annotation>
+                    <xs:appinfo>Operation reference number</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4C_Status">
+                <xs:annotation>
+                    <xs:appinfo>Result of posting status update</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_OperationStatusResponseFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FileHeader" type="W4F_OperationStatusResponseFileHeader"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="NotificationList">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="Notification" type="W4P_OperationStatusNotification"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4F_OperationStatusResponseFileHeader">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="FormatVersion" type="W4D_Version">
+                <xs:annotation>
+                    <xs:appinfo>File format version: 2.0</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="CreationDate" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>File creation date.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="CreationTime" type="W4D_Time">
+                <xs:annotation>
+                    <xs:appinfo>File creation time.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="OriginalFileHeader" type="W4F_OperationStatusFileHeader"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="OperationStatusFile" type="W4F_OperationStatusFile"/>
+    <xs:element name="OperationStatusResponseFile" type="W4F_OperationStatusResponseFile"/>
+</xs:schema>

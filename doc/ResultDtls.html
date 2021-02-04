@@ -1,0 +1,131 @@
+<html xmlns:my="http://schemas.microsoft.com/office/infopath/2003/myXSD/2010-08-23T11:30:10">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WAY4 UFX ResultDtls Specification</title>
+<style type="text/css">
+        body {
+            padding: 20px 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table.ResultDtls, table.ResultDtls tr, table.ResultDtls th, table.ResultDtls td {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+        table.ResultDtls th {
+            background-color: #DDDDDD;
+            padding: 2px 4px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        table.ResultDtls td {
+            padding: 2px 4px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th.Number, td.Number {
+            text-align: right !important;
+        }
+        .NoWrap {
+            white-space: nowrap !important;
+        }
+        .Footer {
+            font-size: small;
+            color: #808080;
+        }
+        .Deprecated {
+            text-decoration: line-through;
+            color: #808080;
+        }
+    </style>
+</head>
+<body>
+<h1>WAY4 UFX ResultDtls Specification</h1>
+<p>
+                    In requests, the ResultDtls element is used to specify the
+                    additional data that should be sent in the response.
+                    The following table contains the subset of ResultDtls codes.
+                </p>
+<table class="ResultDtls">
+<tr>
+<th class="Number">#</th><th>Code</th><th>Type</th><th>Description</th><th>Request</th>
+</tr>
+<tr>
+<th colspan="5">Common Codes</th>
+</tr>
+<tr>
+<td class="Number">1</td><td>DateFrom</td><td class="NoWrap">Date (yyyy-MM-dd)</td><td>Start date of a time interval.</td><td>Statement</td>
+</tr>
+<tr>
+<td class="Number">2</td><td>DateTo</td><td class="NoWrap">Date (yyyy-MM-dd)</td><td>End date of a time interval.</td><td>Statement</td>
+</tr>
+<tr>
+<th colspan="5">Information &amp; Application Response Services Codes</th>
+</tr>
+<tr>
+<td class="Number">3</td><td>Balance</td><td class="NoWrap">String</td><td>
+                If the assigned value is 'Y' in a request, the
+                <em xmlns="http://www.w3.org/1999/xhtml">Balance</em>
+                object is returned in the response.
+                It may be used if it is supported by the operation.
+                If additional types balance needed, then code of these types
+                should be presented here separated by ',' mark.
+            </td><td>Contract Inquiry, Doc</td>
+</tr>
+<tr>
+<th colspan="5">Financial Service Codes</th>
+</tr>
+<tr xmlns="">
+<td class="Number">4</td><td>StmtContType</td><td class="NoWrap">String</td><td>
+                Parameter for statement inquiry for filtering operations
+                by their status. Possible values:
+                <ul xmlns="http://www.w3.org/1999/xhtml">
+                    
+<li>"Posted" &ndash; posted operations,</li>
+                    
+<li>"Auth" - authorization operations,</li>
+                    
+<li>"All" &ndash; all operations,</li>
+                    
+<li>
+                        "LastOperations" &ndash; the same as "All".
+                        But the count of operations is limited to "LastOperationsNumber" and default sort order is
+                        descending
+                    </li>
+                
+</ul>
+                See also: LastOperationsNumber.
+            </td><td>Statement</td>
+</tr>
+<tr xmlns="">
+<td class="Number">5</td><td>LastOperationsNumber</td><td class="NoWrap">Number</td><td>
+                Count of operations to be returned in response.
+                <br xmlns="http://www.w3.org/1999/xhtml">
+                Maximum value is 10.
+            </td><td>Statement</td>
+</tr>
+<tr xmlns="">
+<td class="Number">6</td><td>StmtType</td><td class="NoWrap">String</td><td>
+                The assigned value specifies type of statement that is returned
+                in the response. Supported values:
+                <ul xmlns="http://www.w3.org/1999/xhtml">
+                    
+<li>"Mini" &ndash; mini statement,</li>
+                    
+<li>"Additional" &ndash; additional statement,</li>
+                    
+<li>"Custom" &ndash; custom statement.</li>
+                
+</ul>
+                It may be used if it is supported by the operation.
+            </td><td>Statement</td>
+</tr>
+</table>
+<p class="Footer">
+                    This information is confidential and must be used exclusively
+                    to work with OpenWay software. It may not be duplicated,
+                    published or disclosed without written permission from OpenWay Group.
+                </p>
+</body>
+</html>

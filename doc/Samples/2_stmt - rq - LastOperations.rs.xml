@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<UFXMsg version="2.0" direction="Rq" msg_type="Doc" scheme="WAY4Doc">
+  <MsgId>9ea8a462-d705-4eee-bfb5-eee5ebab9c5a</MsgId>
+  <Source app="Bank1"/>
+  <MsgData>
+    <Doc>
+      <TransType>
+        <TransCode>
+          <MsgCode>01000S</MsgCode>
+        </TransCode>
+      </TransType>
+      <DocRefSet>
+        <Parm>
+          <ParmCode>RRN</ParmCode>
+          <Value>331986100050</Value>
+        </Parm>
+      </DocRefSet>
+      <Requestor>
+        <ContractNumber>411***476</ContractNumber>
+      </Requestor>
+      <Source>
+        <ContractNumber>A**WEB01</ContractNumber>
+        <InstInfo>
+          <InstitutionIdType>BIN</InstitutionIdType>
+          <Institution>0001</Institution>
+        </InstInfo>
+      </Source>
+      <ResultDtls>
+        <Parm>
+          <ParmCode>StmtType</ParmCode>
+          <Value>Additional</Value>
+        </Parm>
+        <Parm>
+          <ParmCode>StmtContType</ParmCode>
+          <Value>LastOperations</Value>
+        </Parm>
+        <Parm>
+          <ParmCode>LastOperationsNumber</ParmCode>
+          <Value>2</Value>
+        </Parm>
+        <Parm>
+          <ParmCode>Balance</ParmCode>
+          <Value>TOTAL_BALANCE</Value>
+        </Parm>
+      </ResultDtls>
+    </Doc>
+  </MsgData>
+</UFXMsg>

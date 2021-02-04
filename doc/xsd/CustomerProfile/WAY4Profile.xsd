@@ -1,0 +1,1972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified" ow:feature="CustomerProfile">
+    <xs:include schemaLocation="../WAY4Types.xsd"/>
+    <xs:include schemaLocation="../Application/WAY4Appl.xsd"/>
+    <xs:simpleType name="W4D_BodyType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Xml"/>
+            <xs:enumeration value="Text"/>
+            <xs:enumeration value="Attachment"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_InOut">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Incoming"/>
+            <xs:enumeration value="Outgoing"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4P_Direction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="In"/>
+            <xs:enumeration value="InOut"/>
+            <xs:enumeration value="Out"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4P_PhaseType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Input"/>
+            <xs:enumeration value="Confirm"/>
+            <xs:enumeration value="EndEMVTransaction"/>
+            <xs:enumeration value="CashIn"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4P_UseType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Main"/>
+            <xs:enumeration value="Attachment"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="W4C_Attachment">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Id" type="W4D_Counter"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="MIMEType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:documentation>MIME content type</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Charset" type="W4D_Code">
+                <xs:annotation>
+                    <xs:documentation>MIME content encoding</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="UseType" type="W4P_UseType"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="FileDtls">
+                <xs:annotation>
+                    <xs:documentation>Extra properties. Parm/ParmType is reserved for future use</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="W4C_ParmSetFree">
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="FileLink" type="W4P_FileLink"/>
+                            </xs:sequence>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Address">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+            <xs:choice maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="EMail" type="W4D_Code"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_AffiliatedSystem">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Affiliated System Code is a unique identifier of a Client Application. It can be used for a request routing</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Human readable name of an Affiliated System</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ExtObjectFor">
+                <xs:annotation>
+                    <xs:appinfo>External Object identifier. An object such as a Client can have a special identifier in the Affiliated System different from its internal identifiers. ExtObjectFor is used to present clients' external identifiers so that the Affiliated System recognises them.</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4C_ObjectFor">
+                            <xs:choice>
+                                <xs:element maxOccurs="1" minOccurs="1" name="ClientIDT" type="W4C_ClientIDT">
+                                    <xs:annotation>
+                                        <xs:appinfo>Client's indentifying information. Indicated if the
+request object is identified by client.</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:choice>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ExtFilters">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="Filter" type="W4C_Filter"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_AffiliatedSystems">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="AffiliatedSystem" type="W4P_AffiliatedSystem">
+                <xs:annotation>
+                    <xs:appinfo>AffiliatedSystem is a Software Application which can provide some service, such as Payment processing or Information presentation. The contained data can be used for request routing</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_AssociatedObject">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="AssociatedObjectIDT" type="W4P_AssociatedObjectIDT"/>
+            <xs:element maxOccurs="0" minOccurs="0" name="AssociatedObjectInfo" type="W4P_Extra">
+                <xs:annotation>
+                    <xs:appinfo>Service Additional Information.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_AssociatedObjectIDT">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Service Identifier.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Type" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Service type</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Attachment">
+        <xs:complexContent>
+            <xs:extension base="W4C_Attachment"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Calculation">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Script" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Parms" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo>Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Condition">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Script" type="W4D_Name"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_ConditionIDT">
+        <xs:complexContent>
+            <xs:restriction base="W4P_Condition">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Conditions">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Condition" type="W4P_Condition"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_CustomerProfile">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="RegNumber" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>Registration Number</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime"/>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="Requestor" type="W4C_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo>Request initiator. Participates in online requests as a person who requests that the request should be performed. Secret values and privileges to perform operations with ObjectFor (e.g. Card) are checked for this participant.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Source" type="W4C_Contractor">
+                        <xs:annotation>
+                            <xs:appinfo>Request sender. Device from which a request is received (e.g. an ATM).</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ValidationDtls" type="W4C_ParmSet">
+                        <xs:annotation>
+                            <xs:appinfo>Request validation parameters. Parm/ParmType is reserved for future use</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="ObjectType">
+                    <xs:annotation>
+                        <xs:appinfo>Object with which operation should be executed: "Menu" - menu</xs:appinfo>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="AffiliatedSystem"/>
+                            <xs:enumeration value="Operation"/>
+                            <xs:enumeration value="Template"/>
+                            <xs:enumeration value="Menu"/>
+                            <xs:enumeration value="HandBook"/>
+                            <xs:enumeration value="Service"/>
+                            <xs:enumeration value="OperationContext"/>
+                            <xs:enumeration value="Letter"/>
+                            <xs:enumeration value="FavoriteMenu"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="ActionType">
+                    <xs:annotation>
+                        <xs:appinfo>Action Type for an Object (see comments for the ObjectType element for supported type information). Actions applied to the object: "Create"  create an object; Update"  update the object; "Remove"  remove the object, "Inquiry"  information Inquiry; "Execute"  execute the action.</xs:appinfo>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Add"/>
+                            <xs:enumeration value="Inquiry"/>
+                            <xs:enumeration value="Execute"/>
+                            <xs:enumeration value="Create"/>
+                            <xs:enumeration value="Update"/>
+                            <xs:enumeration value="Remove"/>
+                            <xs:enumeration value="Activate"/>
+                            <xs:enumeration value="Deactivate"/>
+                            <xs:enumeration value="Iterate"/>
+                            <xs:enumeration value="Refresh"/>
+                            <xs:enumeration value="Proceed"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ResultDtls" type="W4C_ResultDtls">
+                    <xs:annotation>
+                        <xs:appinfo>Result parameters specifying data necessary in the response in elements array Parm; and Filter information in Elements array Filter. 
+Parm. Supported values: "RequestedLanguage"  language into which response data should be translated. See section "ResultDtls Codes" in the UFX specification for full information. Parm/ParmCode is used for Code, and Parm/Value is used for a Value corresponding to the Code.
+</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="ObjectFor">
+                    <xs:annotation>
+                        <xs:appinfo>Object Identifier. It contains a reference to an Object for which the action is requested. Its type may differ from the type defined in the ObjectType element.</xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element maxOccurs="1" minOccurs="1" name="MenuIDT">
+                                <xs:annotation>
+                                    <xs:appinfo>Menu Identifier. It contains a reference to a Menu. See the DataRs/Menu definition for more details</xs:appinfo>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:complexContent>
+                                        <xs:restriction base="W4P_Menu">
+                                            <xs:sequence>
+                                                <xs:sequence maxOccurs="1" minOccurs="1">
+                                                    <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                                                        <xs:annotation>
+                                                            <xs:appinfo>Menu Code. It is a unique identifier of a Menu</xs:appinfo>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:sequence>
+                                        </xs:restriction>
+                                    </xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="ServiceIDT" type="W4P_ServiceIDT">
+                                <xs:annotation>
+                                    <xs:appinfo>Service Identifier. It contains a reference to a Service. See the DataRs/Service definition for more details.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="HandBookIDT">
+                                <xs:annotation>
+                                    <xs:appinfo>HandBook Identifier. It contains a reference to a HandBook See definition to DataRs/HandBook definition for more details.</xs:appinfo>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:complexContent>
+                                        <xs:extension base="W4P_HandBookIDT">
+                                            <xs:sequence>
+                                                <xs:element maxOccurs="1" minOccurs="0" name="Filter">
+                                                    <xs:annotation>
+                                                        <xs:appinfo>A Filter defines a Property whose data can be used for HandBook filtration.</xs:appinfo>
+                                                    </xs:annotation>
+                                                    <xs:complexType>
+                                                        <xs:sequence>
+                                                            <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_Properties"/>
+                                                        </xs:sequence>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:sequence>
+                                        </xs:extension>
+                                    </xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="OperationIDT" type="W4P_OperationIDT">
+                                <xs:annotation>
+                                    <xs:appinfo>Operation Identifier. It contains a reference to an Operation. See definition to DataRs/Operations/Operation definition for more details.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="TemplateIDT" type="W4P_TemplateIDT">
+                                <xs:annotation>
+                                    <xs:appinfo>Template Identifier. It contains a reference to a Template. See definition to DataRs/Templates/Template definition for more details.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="1" name="Letters" type="W4P_LettersIDT"/>
+                            <xs:element maxOccurs="1" minOccurs="1" name="OperationContext" type="W4P_OperationContext"/>
+                            <xs:element maxOccurs="1" minOccurs="1" name="MenuItems" type="W4P_MenuItemsFavorites"/>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:choice maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" name="Data">
+                        <xs:annotation>
+                            <xs:appinfo>Data to be processed corresponding to a request for an Object whose type is defined in the ObjectType element</xs:appinfo>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:choice>
+                                <xs:element maxOccurs="1" minOccurs="1" name="Operation">
+                                    <xs:annotation>
+                                        <xs:appinfo>Operation Data to be processed corresponding to a request</xs:appinfo>
+                                    </xs:annotation>
+                                    <xs:complexType>
+                                        <xs:complexContent>
+                                            <xs:restriction base="W4P_Operation">
+                                                <xs:sequence>
+                                                    <xs:element maxOccurs="1" minOccurs="1" name="OperationIDT" type="W4P_OperationIDT">
+                                                        <xs:annotation>
+                                                            <xs:appinfo>Operation Identifier. It contains identification information for an Operation.</xs:appinfo>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                    <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime">
+                                                        <xs:annotation>
+                                                            <xs:appinfo>Request Local Date (transaction date).</xs:appinfo>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                    <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_Properties">
+                                                        <xs:annotation>
+                                                            <xs:appinfo>Property Set. It contains Operation data as a set of Properties</xs:appinfo>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                    <xs:sequence maxOccurs="1" minOccurs="1">
+                                                        <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4P_Status"/>
+                                                        <xs:element maxOccurs="1" minOccurs="0" name="TemplateIDT" type="W4P_TemplateIDTRst">
+                                                            <xs:annotation>
+                                                                <xs:appinfo>Template Identifier. It contains identification information for an Template</xs:appinfo>
+                                                            </xs:annotation>
+                                                        </xs:element>
+                                                    </xs:sequence>
+                                                    <xs:choice maxOccurs="1" minOccurs="0">
+                                                        <xs:sequence maxOccurs="1" minOccurs="1">
+                                                            <xs:element maxOccurs="1" minOccurs="1" name="PostingDate" type="W4D_Date">
+                                                                <xs:annotation>
+                                                                    <xs:appinfo>Operation Posting date. If it is present in a request, it means the requested Operation posting date. In responses, it means the date when the Operation was posted.</xs:appinfo>
+                                                                </xs:annotation>
+                                                            </xs:element>
+                                                        </xs:sequence>
+                                                    </xs:choice>
+                                                </xs:sequence>
+                                            </xs:restriction>
+                                        </xs:complexContent>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="1" name="Template" type="W4P_TemplateData">
+                                    <xs:annotation>
+                                        <xs:appinfo>Template Data to be processed corresponding to a request</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="1" name="Letter" type="W4P_Letter"/>
+                                <xs:element maxOccurs="1" minOccurs="1" name="PreviousContext" type="W4P_PreviousContext"/>
+                            </xs:choice>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="DataRs">
+                            <xs:annotation>
+                                <xs:appinfo>Response Data. Aggregate contains data specific for a response to a request.</xs:appinfo>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Menu" type="W4P_Menu">
+                                        <xs:annotation>
+                                            <xs:appinfo>A Menu is a hierarchical structure used to allow a terminal to help a Customer to select the necessary service. A Menu contains content data. It does not contain formatting instructions.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Service" type="W4P_Service">
+                                        <xs:annotation>
+                                            <xs:appinfo>The structure is used to return defined Service information. A Service defines a set of Properties to be filled in to perform an Operation (for details, see comment for DataRs/Operation/Operation). The Code is the same as in Menu/ServiceCode.</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="HandBook" type="W4P_HandBook">
+                                        <xs:annotation>
+                                            <xs:appinfo>A HandBook is a dictionary. It can present different types of static information about existing objects, such as Countries, Banks, or Kindergarten</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Operations" type="W4P_Operations">
+                                        <xs:annotation>
+                                            <xs:appinfo>Set of Operations</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Templates" type="W4P_Templates">
+                                        <xs:annotation>
+                                            <xs:appinfo>Set of Templates</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="AffiliatedSystems" type="W4P_AffiliatedSystems">
+                                        <xs:annotation>
+                                            <xs:appinfo>Set of Affiliated Systems</xs:appinfo>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="Letters" type="W4P_Letters"/>
+                                    <xs:element maxOccurs="1" minOccurs="1" name="OperationContext" type="W4P_OperationContextRs"/>
+                                </xs:choice>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Status" type="W4P_Status">
+                            <xs:annotation>
+                                <xs:appinfo> Loading status</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:choice>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_AddInfo">
+                    <xs:annotation>
+                        <xs:appinfo> Additional Data on the requested object.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Dependencies">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Dependency" type="W4P_Dependency"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Dependency">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Type">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Calculation"/>
+                            <xs:enumeration value="Filter"/>
+                            <xs:enumeration value="HandBook"/>
+                            <xs:enumeration value="ResultDtls"/>
+                            <xs:enumeration value="EditMask"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Code" type="W4D_Code"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Property">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="W4P_PropertyCode">
+                                <xs:sequence>
+                                    <xs:element maxOccurs="1" minOccurs="0" name="ParmCode" type="W4D_Code"/>
+                                </xs:sequence>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_DisplayComments">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="DisplayComment" type="W4D_Name"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Extra">
+        <xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo>Additional Information. Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                <xs:annotation>
+                    <xs:appinfo>Additional Information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4P_FileLink">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="LinkType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Url"/>
+                        <xs:enumeration value="ClientSide"/>
+                        <xs:enumeration value="FileServer"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="FilePath" type="W4D_String"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_FilesType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="File" type="W4P_Attachment"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Attachments" type="W4D_YesNo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Group">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:annotation>
+                        <xs:appinfo>identifiers</xs:appinfo>
+                    </xs:annotation>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="GroupCode" type="W4D_Code"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Class" type="W4D_Code">
+                        <xs:annotation>
+                            <xs:documentation>Identifies group class if exist. I.e. 'Address' for group consists of properties related to address fields.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:element maxOccurs="1" minOccurs="0" name="Direction" type="W4P_Direction">
+                        <xs:annotation>
+                            <xs:appinfo>Direction determines appearance type for a Property.
+Supported values:
+In - Property should be filled on a FrontEnd side
+Out - Property should be shown as an Operation's result
+InOut - Property should be shown as an Operation's result
+</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="OutSequenceN" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Out Sequence Number  is a number for a Property in sequence of 
+Properties should be shown as an Operation's result
+
+</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:element maxOccurs="1" minOccurs="0" name="Visible" type="W4D_YesNo"/>
+                </xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra"/>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_GroupFull">
+        <xs:complexContent>
+            <xs:extension base="W4P_Group">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_PropertiesFull"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Groups">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Group" type="W4P_GroupFull"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBook">
+        <xs:complexContent>
+            <xs:restriction base="W4P_HandBookInfo">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="HandBookItems" type="W4P_HandBookItems"/>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookBase">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookCommon">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:choice maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_Code">
+                        <xs:annotation>
+                            <xs:documentation>Deprecated</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                </xs:choice>
+                <xs:element maxOccurs="1" minOccurs="1" name="DisplayName" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="DefaultCode" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:documentation>Deprecated</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="HandBookItems" type="W4P_HandBookItemsCommon"/>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookDir">
+        <xs:complexContent>
+            <xs:extension base="W4P_HandBookFull">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="HandBookItems" type="W4P_HandBookItemsInfo"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookForProp">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="HandBook" type="W4P_HandBookInfo">
+                <xs:annotation>
+                    <xs:appinfo>HandBook. See comments for DataRs/HandBook for details.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Filter">
+                <xs:annotation>
+                    <xs:appinfo>Filter defines a Property which data can be used for the HandBook filtration.</xs:appinfo>
+                    <xs:documentation>Now used with nested parms (was deprecated)</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Parms" type="W4C_ParmSet">
+                            <xs:annotation>
+                                <xs:appinfo>Parm/ParmType is reserved for future use</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_PropertiesCode">
+                            <xs:annotation>
+                                <xs:documentation>Deprecated</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TemplateCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:documentation>ValueAlias</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookFull">
+        <xs:complexContent>
+            <xs:restriction base="W4P_HandBookBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                    <xs:element maxOccurs="1" minOccurs="1" name="DisplayName" type="W4D_Name"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookIDT">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookInfo">
+        <xs:complexContent>
+            <xs:extension base="W4P_HandBookBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="HandBookItems" type="W4P_HandBookItems"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookInfoCode">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="HandBook">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="TemplateCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:documentation>ValueAlias</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookItem">
+        <xs:complexContent>
+            <xs:restriction base="W4P_HandBookItemBase">
+                <xs:sequence>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:sequence maxOccurs="1" minOccurs="1">
+                                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+                            </xs:sequence>
+                            <xs:sequence maxOccurs="1" minOccurs="1">
+                                <xs:element maxOccurs="1" minOccurs="0" name="ValueType" type="W4D_Code"/>
+                                <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_Code"/>
+                            </xs:sequence>
+                        </xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_Properties"/>
+                        </xs:sequence>
+                    </xs:choice>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IsSelected" type="W4D_YesNo"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                        <xs:annotation>
+                            <xs:appinfo>Service Additional Information.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookItemBase">
+        <xs:sequence>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Filters" type="W4P_HBFilter"/>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="ValueType" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Value" type="W4D_Code"/>
+                    </xs:sequence>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_Properties"/>
+                </xs:sequence>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsSelected" type="W4D_YesNo"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                <xs:annotation>
+                    <xs:appinfo>Service Additional Information.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookItemCommon">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Type" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:documentation>Deprecated</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="DisplayName" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="Filters" type="W4P_HBFilter">
+                    <xs:annotation>
+                        <xs:appinfo>References to another Handbook and HandBookItem which are filtering the HandBookItem</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" name="ValueType" type="W4D_Code"/>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_Code"/>
+                </xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="0" name="DefaultCode" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:documentation>Deprecated</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                        <xs:annotation>
+                            <xs:appinfo>Service Additional Information.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Deprecated</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="HandBooks">
+                    <xs:annotation>
+                        <xs:documentation>Deprecated</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="HandBook" type="W4P_HandBookCommon"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookItemDir">
+        <xs:complexContent>
+            <xs:restriction base="W4P_HandBookItemBase">
+                <xs:sequence>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:sequence maxOccurs="1" minOccurs="1">
+                                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                                <xs:element maxOccurs="1" minOccurs="1" name="DisplayName" type="W4D_Name"/>
+                            </xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="0" name="Filters" type="W4P_HBFilter"/>
+                            <xs:sequence maxOccurs="1" minOccurs="1">
+                                <xs:element maxOccurs="1" minOccurs="0" name="Value" type="W4D_Code"/>
+                            </xs:sequence>
+                        </xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>Online use only</xs:documentation>
+                            </xs:annotation>
+                            <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_Properties"/>
+                        </xs:sequence>
+                    </xs:choice>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                        <xs:annotation>
+                            <xs:appinfo>Service Additional Information.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookItems">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="HandBookItem" type="W4P_HandBookItem">
+                <xs:annotation>
+                    <xs:appinfo>A HandBook Item is an instance of a Hanbook record. For example, if HandBook/Code is Country, then HandBookItem can contain information about Germany or any other Country.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookItemsCommon">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="HandBookItem" type="W4P_HandBookItemCommon"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBookItemsInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="HandBookItem" type="W4P_HandBookItemDir"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBooks">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="HandBook" type="W4P_HandBook"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HandBooksDir">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="HandBook" type="W4P_HandBookDir"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_HBFilter">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Filter">
+                <xs:annotation>
+                    <xs:appinfo>Reference to another Handbook and HandBookItem which are filtering the HandBookItem</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="HandBookCode" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Reference to a Handbook</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="ItemCode" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Reference to a HandBookItem.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Letter">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="LetterIDT" type="W4P_LetterIDT"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="MsgDtls" type="W4P_LetterMsgDtls">
+                <xs:annotation>
+                    <xs:documentation>Message properties</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Header</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="From" type="W4P_Address"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="To" type="W4P_Address"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="Cc" type="W4P_Address"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="Bcc" type="W4P_Address"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Body</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="Content" type="W4P_LetterContent">
+                    <xs:annotation>
+                        <xs:documentation>Message content. May not be present in responses or delivery message.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_LetterContent">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Subject" type="W4D_String">
+                <xs:annotation>
+                    <xs:documentation>Message Subject</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Text" type="W4D_String"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="Format">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Plain"/>
+                            <xs:enumeration value="Rich"/>
+                            <xs:enumeration value="HTML"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Files" type="W4P_FilesType"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Reference">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Id" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="RefType">
+                            <xs:annotation>
+                                <xs:documentation>Type of the reference. Supported values: 'Url' - Uniform resource locator; 'MenuItem' - deprecated; 'Menu' - reference to MenuItem inside specified Menu; 'ServiceTemplate' - reference to template based on service </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="Url"/>
+                                    <xs:enumeration value="MenuItem"/>
+                                    <xs:enumeration value="Menu"/>
+                                    <xs:enumeration value="ServiceTemplate"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="1" name="RefValue" type="W4D_String">
+                                <xs:annotation>
+                                    <xs:documentation>Reference Value. It is used with Reference Type (RefType) element, which defines type of reference. Notice: in case RefType is Menu, Code of a Menu will be filled into RefValue and Code of a MenuItem will be filled into RefSubValue. In case RefType is ServiceTemplate, Code of a Template will be filled into RefSubValue and Code of Service will be filled into RefValue.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="RefSubValue" type="W4D_String">
+                                <xs:annotation>
+                                    <xs:documentation>Reference Sub-value. See annotation to RefValue for details</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="0" name="DisplayComment" type="W4D_String">
+                            <xs:annotation>
+                                <xs:appinfo>Comment is a hint to be shown for prompting</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_LetterIDT">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="IDT" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_LetterMsgDtls">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Direction" type="W4D_InOut"/>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="PreviousIDT" type="W4P_LetterIDT"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Template">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="DisplayName" type="W4D_Name"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Priority" type="W4D_Code"/>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Dates</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="CreationDt" type="W4D_DateTime"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="ExpiryDt" type="W4D_DateTime"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="ReadDt" type="W4D_DateTime"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="AnswerDt" type="W4D_DateTime"/>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="AcceptedStatus" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="DeliveryType" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo> Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Letters">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Letter" type="W4P_Letter"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_LettersIDT">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Letter">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4P_Letter">
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="LetterIDT" type="W4P_LetterIDT"/>
+                            </xs:sequence>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_License">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="LicenseLine" type="W4D_Name"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Menu">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>It is a unique Menu identifier.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Type" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Menu Item Type. </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>Human readable name of a Menu</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                <xs:annotation>
+                    <xs:appinfo>Menu Additional Information.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="MenuItems" type="W4P_MenuItems">
+                <xs:annotation>
+                    <xs:appinfo>Set of Menu Items</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_MenuItem">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="Availability">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="0" name="ConditionIDT" type="W4P_ConditionIDT">
+                                <xs:annotation>
+                                    <xs:documentation>Reference to a condition defined in current Operation Context. The condition has to be processed using data from current Operation Context</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="SourceConditionIDT" type="W4P_ConditionIDT">
+                                <xs:annotation>
+                                    <xs:documentation>Reference to a specific source condition.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Menu Item Code. It is a unique identifier of a Menu Item</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Type" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Menu Item Type. </xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="0" minOccurs="0" name="MemberId" type="W4D_MemberID">
+                            <xs:annotation>
+                                <xs:appinfo>Member ID.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Human readable name of a Menu Item</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Either Service or OperationContext is returned in Menu Inquiry response.</xs:documentation>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Service" type="W4P_ServiceBase">
+                            <xs:annotation>
+                                <xs:appinfo>Service Information</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="OperationContext" type="W4P_OperationContextRs"/>
+                    </xs:choice>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DisplayComments" type="W4P_DisplayComments">
+                        <xs:annotation>
+                            <xs:appinfo>Menu Item display comments. They allow more human readable information to be presented.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="AutoStartUp" type="W4D_Code"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IsFavorite" type="W4D_YesNo"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                        <xs:annotation>
+                            <xs:appinfo>Menu Item Additional Information.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="0" name="Menu" type="W4P_Menu">
+                    <xs:annotation>
+                        <xs:appinfo>Menu Information.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_MenuItemFavorite">
+        <xs:complexContent>
+            <xs:restriction base="W4P_MenuItem">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                                <xs:annotation>
+                                    <xs:appinfo>Menu Item Code. It is a unique identifier of a Menu Item</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="0" minOccurs="0" name="MemberId" type="W4D_MemberID">
+                                <xs:annotation>
+                                    <xs:appinfo>Member ID.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Human readable name of a Menu Item</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_MenuItems">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="MenuItem" type="W4P_MenuItem">
+                <xs:annotation>
+                    <xs:appinfo>Menu Item</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_MenuItemsFavorites">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="MenuItem" type="W4P_MenuItemFavorite">
+                <xs:annotation>
+                    <xs:appinfo>Menu Item</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Operation">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="OperationIDT" type="W4P_OperationIDT"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Source" type="W4C_Contractor">
+                <xs:annotation>
+                    <xs:appinfo>Request sender. Device from which a request is received (e.g. an ATM).</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Name of the Template. It is given by a Customer</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AllowTemplate" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="AllowExecute" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_Properties"/>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4P_Status"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="TemplateIDT" type="W4P_TemplateIDTRst"/>
+            </xs:sequence>
+            <xs:choice maxOccurs="1" minOccurs="0">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="PostingDate" type="W4D_Date"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_OperationContext">
+        <xs:sequence>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="ServiceIDT" type="W4P_ServiceIDT"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="RefTemplateIDT" type="W4P_TemplateIDTRst"/>
+                </xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="1" name="OperationIDT" type="W4P_OperationIDT">
+                    <xs:annotation>
+                        <xs:appinfo>Operation Identifier. It contains a reference to an Operation. See definition to DataRs/Operations/Operation definition for more details.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="TemplateIDT" type="W4P_TemplateIDT">
+                    <xs:annotation>
+                        <xs:appinfo>Template Identifier. It contains a reference to a Template. See definition to DataRs/Templates/Template definition for more details.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="ScenarioCode" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="ProcessingRules" type="W4P_Rules">
+                <xs:annotation>
+                    <xs:documentation>Processing rules. Following codes are supported:
+1. TransCondition - transaction condition for document. 
+2. CreditTransCondition - transaction condition for credit document.
+3. EMVData - EMV data for document
+4. RequestType - for internal requests. Values: 
+'HandBookInquiry' </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Phases">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="Phase" type="W4P_PhaseBase"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_PropertiesData"/>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_OperationContextBase">
+        <xs:complexContent>
+            <xs:restriction base="W4P_Service">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" name="ServiceIDT" type="W4P_ServiceIDT">
+                            <xs:annotation>
+                                <xs:appinfo>Service Identifier.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RefTemplateIDT" type="W4P_TemplateIDTRst"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RefOperationIDT" type="W4P_OperationIDTRst"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="ScenarioCode" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Service Scenario Code. It is used to define the Scenario according to which a service should be processed</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Rules" type="W4P_Rules"/>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Human readable name of a Service</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DisplayComments" type="W4P_DisplayComments">
+                        <xs:annotation>
+                            <xs:appinfo>Service  display comments. They allows to present more human readable information</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="License" type="W4P_License">
+                        <xs:annotation>
+                            <xs:appinfo>Service license. Is used with servcie rule 'NEED_ACCEPT_SERVICE_LICENSE'.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                        <xs:annotation>
+                            <xs:appinfo>Service Additional Information.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_PropertiesData">
+                            <xs:annotation>
+                                <xs:appinfo>Set of properties</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="PropertiesGroup" type="W4P_PropertiesGroup">
+                            <xs:annotation>
+                                <xs:documentation>Deprecated</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Conditions" type="W4P_Conditions"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IsLastLevel" type="W4D_YesNo">
+                        <xs:annotation>
+                            <xs:appinfo>IsLastLevel defines fullness of service presentation.
+Default value is 'Yes'. If the element is not presented, the IsLastLevel = Yes</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_OperationContextRs">
+        <xs:complexContent>
+            <xs:extension base="W4P_OperationContextBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="OperationContext" type="W4P_OperationContextBase">
+                        <xs:annotation>
+                            <xs:documentation>Operation Context for SCHEDULE service may be returned in sub element.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="Phases">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" minOccurs="1" name="Phase" type="W4P_Phase"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_OperationIDT">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="RefSet" type="W4C_ParmSet">
+                <xs:annotation>
+                    <xs:appinfo> Set of Operation Identifiers. Supported values: SRN, ReferenceNumber (RRN fod Docs, RegNumber=SRN for applications), AuthCode. Parm/ParmType is reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ServiceIDT" type="W4P_ServiceIDT">
+                <xs:annotation>
+                    <xs:appinfo>Service Identifier. It defines a reference to a Services specific for the Operation..</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_OperationIDTRst">
+        <xs:complexContent>
+            <xs:restriction base="W4P_OperationIDT">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="RefSet" type="W4C_ParmSet">
+                        <xs:annotation>
+                            <xs:appinfo> Set of Operation Identifiers. Supported values: SRN, ReferenceNumber (RRN fod Docs, RegNumber=SRN for applications), AuthCode. Parm/ParmType is reserved for future use</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Operations">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Operation" type="W4P_Operation">
+                <xs:annotation>
+                    <xs:appinfo>An Operation is a personalised Service by a Customer who also requested to process it. For example, if a Service defines payment content, an Operation is the action of the payment processing.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_PeriodicInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="NextActivationDate" type="W4D_Date"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="ProcessedCount" type="W4D_Counter"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Schedules" type="W4P_TemplatesBase">
+                <xs:annotation>
+                    <xs:appinfo>Set of Templates</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Phase">
+        <xs:complexContent>
+            <xs:restriction base="W4P_PhaseBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4P_PhaseType"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Data" type="W4P_PhaseData"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_PhaseBase">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4P_PhaseType"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Data" type="W4P_PhaseData"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4C_Status"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_PhaseData">
+        <xs:choice>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Type=CashIn</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Type=EndEMVTransaction</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="1" name="EMVData" type="W4D_String"/>
+            </xs:sequence>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4P_PreviousContext">
+        <xs:complexContent>
+            <xs:restriction base="W4P_Service">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="ServiceIDT" type="W4P_ServiceIDT">
+                        <xs:annotation>
+                            <xs:appinfo>Service Identifier.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_PropertiesData">
+                        <xs:annotation>
+                            <xs:appinfo>Set of properties</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Properties">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Property" type="W4P_PropertyData"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_PropertiesCode">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Property" type="W4P_PropertyCode"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_PropertiesData">
+        <xs:sequence>
+            <xs:choice maxOccurs="unbounded" minOccurs="1">
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Property" type="W4P_PropertyBase">
+                    <xs:annotation>
+                        <xs:appinfo>A Property specifies a bit of data necessary to process a Service</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Group" type="W4P_GroupFull"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_PropertiesFull">
+        <xs:complexContent>
+            <xs:restriction base="W4P_PropertiesData">
+                <xs:sequence>
+                    <xs:choice maxOccurs="unbounded" minOccurs="1">
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="Property" type="W4P_PropertyBase">
+                            <xs:annotation>
+                                <xs:appinfo>A Property specifies a bit of data necessary to process a Service</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Group" type="W4P_GroupFull"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_PropertiesGroup">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Property Group Code. It is a unique Group identifier</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="DisplayName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Human readable name of a Properties Group</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_PropertiesData">
+                <xs:annotation>
+                    <xs:appinfo>Set of properties</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_PropertyBase">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:appinfo>identifiers</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="GroupCode" type="W4D_Code"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="Direction" type="W4P_Direction">
+                    <xs:annotation>
+                        <xs:appinfo>Direction determines appearance type for a Property.
+Supported values:
+In - Property should be filled on a FrontEnd side
+Out - Property should be shown as an Operation's result
+InOut - Property should be shown as an Operation's result
+</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="OutSequenceN" type="W4D_Counter">
+                    <xs:annotation>
+                        <xs:appinfo>Out Sequence Number  is a number for a Property in sequence of 
+Properties should be shown as an Operation's result
+
+</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:appinfo>Properties</xs:appinfo>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="ToolTipText" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="Value" type="W4D_Name"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:appinfo>Typification</xs:appinfo>
+                </xs:annotation>
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>Visualization</xs:appinfo>
+                    </xs:annotation>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="Visible" type="W4D_YesNo"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="VisibilityConditionIDT" type="W4P_ConditionIDT"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="Editable" type="W4D_YesNo"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="EditabilityConditionIDT" type="W4P_ConditionIDT"/>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="AllowEntry" type="W4D_YesNo"/>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="1" name="EditMask" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="EditMaskParms" type="W4C_ParmSet">
+                            <xs:annotation>
+                                <xs:appinfo>Parm/ParmType is reserved for future use</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Mandatory" type="W4D_YesNo"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ReEntry" type="W4P_PropertyCode"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IsChanged" type="W4D_YesNo">
+                        <xs:annotation>
+                            <xs:appinfo>Reserved for future use</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IsSensitive" type="W4D_YesNo">
+                        <xs:annotation>
+                            <xs:appinfo>IsSensitive marks that property value is sensitive and could not be logged or passed to the yellow zone.
+                              'No' - by default.
+                              </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:choice maxOccurs="1" minOccurs="0">
+                    <xs:element maxOccurs="1" minOccurs="0" name="HandBookInfo" type="W4P_HandBookForProp"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Calculation" type="W4P_Calculation"/>
+                </xs:choice>
+                <xs:element maxOccurs="1" minOccurs="0" name="Dependencies" type="W4P_Dependencies"/>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_PropertyCode">
+        <xs:complexContent>
+            <xs:restriction base="W4P_PropertyBase">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:appinfo>identifiers</xs:appinfo>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="GroupCode" type="W4D_Code"/>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_PropertyData">
+        <xs:complexContent>
+            <xs:restriction base="W4P_PropertyBase">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:appinfo>identifiers</xs:appinfo>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="GroupCode" type="W4D_Code"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:appinfo>Properties</xs:appinfo>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+                        <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_Name"/>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Rules">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Rule" type="W4C_Parm"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Service">
+        <xs:complexContent>
+            <xs:restriction base="W4P_ServiceBase">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" name="ServiceIDT" type="W4P_ServiceIDT">
+                            <xs:annotation>
+                                <xs:appinfo>Service Identifier.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RefTemplateIDT" type="W4P_TemplateIDTRst"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RefOperationIDT" type="W4P_OperationIDTRst"/>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="ScenarioCode" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Service Scenario Code. It is used to define the Scenario according to which a service should be processed</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Rules" type="W4P_Rules"/>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Human readable name of a Service</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DisplayComments" type="W4P_DisplayComments">
+                        <xs:annotation>
+                            <xs:appinfo>Service  display comments. They allows to present more human readable information</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="License" type="W4P_License">
+                        <xs:annotation>
+                            <xs:appinfo>Service license. Is used with servcie rule 'NEED_ACCEPT_SERVICE_LICENSE'.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra">
+                        <xs:annotation>
+                            <xs:appinfo>Service Additional Information.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_PropertiesData">
+                            <xs:annotation>
+                                <xs:appinfo>Set of properties</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="PropertiesGroup" type="W4P_PropertiesGroup">
+                            <xs:annotation>
+                                <xs:documentation>Deprecated</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Conditions" type="W4P_Conditions"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IsLastLevel" type="W4D_YesNo">
+                        <xs:annotation>
+                            <xs:appinfo>IsLastLevel defines fullness of service presentation.
+Default value is 'Yes'. If the element is not presented, the IsLastLevel = Yes</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Services" type="W4P_Services"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_ServiceBase">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="IsActive" type="W4D_YesNo"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="ServiceIDT" type="W4P_ServiceIDT"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="RefTemplateIDT" type="W4P_TemplateIDTRst"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="RefOperationIDT" type="W4P_OperationIDTRst"/>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="ScenarioCode" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Service Scenario Code. It is used to define the Scenario according to which a service should be processed</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Rules" type="W4P_Rules"/>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="DisplayName" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="DisplayComments" type="W4P_DisplayComments"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="License" type="W4P_License"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Extra" type="W4P_Extra"/>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_PropertiesData"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="PropertiesGroup" type="W4P_PropertiesGroup">
+                    <xs:annotation>
+                        <xs:documentation>Deprecated</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="Conditions" type="W4P_Conditions"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="IsLastLevel" type="W4D_YesNo">
+                <xs:annotation>
+                    <xs:appinfo>IsLastLevel defines fullness of service presentation.
+Default value is 'Yes'. If the element is not presented, the IsLastLevel = Yes</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Services" type="W4P_Services"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_ServiceData">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="ServiceIDT" type="W4P_ServiceIDT"/>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Properties" type="W4P_Properties"/>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_ServiceIDT">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Service Identifier.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Type" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Service type</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Services">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Service" type="W4P_Service">
+                <xs:annotation>
+                    <xs:appinfo>The structure is used to return defined Service information. A Service defines a set of Properties to be filled in to perform an Operation (for details, see comment for DataRs/Operation/Operation). The Code is the same as in Menu/ServiceCode.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_Status">
+        <xs:complexContent>
+            <xs:extension base="W4C_ApplicationStatus">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ProcessingStatus" type="W4D_Code"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Template">
+        <xs:complexContent>
+            <xs:extension base="W4P_TemplateBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="PeriodicInfo">
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:restriction base="W4P_PeriodicInfo">
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="1" minOccurs="0" name="NextActivationDate" type="W4D_Date"/>
+                                        <xs:element maxOccurs="1" minOccurs="0" name="ProcessedCount" type="W4D_Counter"/>
+                                        <xs:element maxOccurs="1" minOccurs="0" name="Schedules" type="W4P_TemplatesBase">
+                                            <xs:annotation>
+                                                <xs:appinfo>Set of Templates</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:restriction>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_TemplateBase">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="TemplateIDT" type="W4P_TemplateIDT">
+                <xs:annotation>
+                    <xs:appinfo>Template Identifier. It contains identification information for an Template </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Name of the Template. It is given by a Customer</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Comment" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Comment of the Template. It is given by a Customer.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AllowExecute" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4D_ObjStatus"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_Properties">
+                <xs:annotation>
+                    <xs:appinfo>Property Set. It contains Operation data as a set of Properties</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_TemplateBaseRst">
+        <xs:complexContent>
+            <xs:restriction base="W4P_TemplateBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TemplateIDT" type="W4P_TemplateIDT">
+                        <xs:annotation>
+                            <xs:appinfo>Template Identifier. It contains identification information for an Template </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Name of the Template. It is given by a Customer</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Comment" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Comment of the Template. It is given by a Customer.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_Properties">
+                        <xs:annotation>
+                            <xs:appinfo>Property Set. It contains Operation data as a set of Properties</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_TemplateData">
+        <xs:complexContent>
+            <xs:extension base="W4P_TemplateBaseRst">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="PeriodicInfo">
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:restriction base="W4P_PeriodicInfo">
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="1" minOccurs="0" name="Schedules" type="W4P_TemplatesBase">
+                                            <xs:annotation>
+                                                <xs:appinfo>Set of Templates</xs:appinfo>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:restriction>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_TemplateIDT">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Template Code. It a unique identifier of a Template</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ServiceIDT" type="W4P_ServiceIDT">
+                <xs:annotation>
+                    <xs:appinfo>Service Identifier.  It defines reference to a Services specific for the Template.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_TemplateIDTRst">
+        <xs:complexContent>
+            <xs:restriction base="W4P_TemplateIDT">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_TemplateInfo">
+        <xs:complexContent>
+            <xs:restriction base="W4P_TemplateBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TemplateIDT" type="W4P_TemplateIDT">
+                        <xs:annotation>
+                            <xs:appinfo>Template Identifier. It contains identification information for an Template </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="LocalDt" type="W4D_DateTime"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Name" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Name of the Template. It is given by a Customer</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Comment" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Comment of the Template. It is given by a Customer.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Status" type="W4D_ObjStatus"/>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Properties" type="W4P_Properties">
+                        <xs:annotation>
+                            <xs:appinfo>Property Set. It contains Operation data as a set of Properties</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Templates">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Template" type="W4P_Template">
+                <xs:annotation>
+                    <xs:appinfo>A Template is a personalised Service by a Customer who just wants to save filled data. For example, if a Service defines payment content, a Template is a Payment template, which can help to make a payment.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4P_TemplatesBase">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Schedule" type="W4P_TemplateInfo">
+                <xs:annotation>
+                    <xs:appinfo>A Template is a personalised Service by a Customer who just wants to save filled data. For example, if a Service defines payment content, a Template is a Payment template, which can help to make a payment.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CustomerProfile" type="W4P_CustomerProfile"/>
+    <xs:element name="HandBook" type="W4P_HandBookDir"/>
+</xs:schema>

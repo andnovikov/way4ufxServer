@@ -1,0 +1,2037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ow="http://www.openwaygroup.com/xmlns/ufxtypes" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+    <xs:simpleType name="W4D_FilterType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Client"/>
+            <xs:enumeration value="Contract"/>
+            <xs:enumeration value="Address"/>
+            <xs:enumeration value="SubContract"/>
+            <xs:enumeration value="ContractList"/>
+            <xs:enumeration value="Usage"/>
+            <xs:enumeration value="Order"/>
+            <xs:enumeration value="Statement"/>
+            <xs:enumeration value="StatementAll"/>
+            <xs:enumeration value="StatementAuth"/>
+            <xs:enumeration value="StatementPosted"/>
+            <xs:enumeration value="Product"/>
+            <xs:enumeration value="ObjectSearch"/>
+            <xs:enumeration value="AffiliatedSystem"/>
+            <xs:enumeration value="HandBook"/>
+            <xs:enumeration value="Letter"/>
+            <xs:enumeration value="RelatedContract"/>
+            <xs:enumeration value="Tariff"/>
+            <xs:enumeration value="FxRate"/>
+            <xs:enumeration value="AuthMethod"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4C_InstitutionIDType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Branch"/>
+            <xs:enumeration value="Bank"/>
+            <xs:enumeration value="CB"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4C_ParmType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Tag"/>
+            <xs:enumeration value="Flag"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="W4C_RefType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="W4D_Code" use="required">
+                    <xs:annotation>
+                        <xs:appinfo>Reference Type</xs:appinfo>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="W4D_Activation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Activate"/>
+            <xs:enumeration value="Deactivate"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Amount">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_CardExpire">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Channel">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_CheckAvailable">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Check"/>
+            <xs:enumeration value="SeeMain"/>
+            <xs:enumeration value="NoCheck"/>
+            <xs:enumeration value="BillingLimit"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_CheckUsage">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="MainAndOwn"/>
+            <xs:enumeration value="OwnOnly"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Code">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_AreaClassifierType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="USAGE"/>
+            <xs:enumeration value="ROUTING"/>
+            <xs:enumeration value="VISA"/>
+            <xs:enumeration value="MC"/>
+            <xs:enumeration value="MC_IRD"/>
+            <xs:enumeration value="AMEX"/>
+            <xs:enumeration value="JCB"/>
+            <xs:enumeration value="FM"/>
+            <xs:enumeration value="DCI_IPSE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Comment">
+        <xs:annotation>
+            <xs:appinfo>Max length is 255 chars</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ContractNumber">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Counter">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Country">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Currency">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Date">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_DateTime">
+        <xs:annotation>
+            <xs:appinfo>The Format can be as "YYYY-MM-DD HH:MI:SS", as "YYYY-MM-DD".</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Embossing">
+        <xs:annotation>
+            <xs:appinfo>Max length is 32 chars</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_FinCategory">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Y"/>
+            <xs:enumeration value="N"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="y"/>
+            <xs:enumeration value="p"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="d"/>
+            <xs:enumeration value="Z"/>
+            <xs:enumeration value=""/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_FXRateType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Middle"/>
+            <xs:enumeration value="Buy/Sell"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Gender">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Male"/>
+            <xs:enumeration value="Female"/>
+            <xs:enumeration value="Not specified"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_LoadingStatus">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_LongCode">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="64"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_MemberID">
+        <xs:annotation>
+            <xs:appinfo>Max length is 32 chars</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_MsgCode">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_MsgId">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="36"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_PhoneNumber">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Name">
+        <xs:annotation>
+            <xs:appinfo>Max length is 255 chars</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ObjStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Waiting"/>
+            <xs:enumeration value="Posted"/>
+            <xs:enumeration value="Rejected"/>
+            <xs:enumeration value="Suspended"/>
+            <xs:enumeration value="Active"/>
+            <xs:enumeration value="InActive"/>
+            <xs:enumeration value="Override"/>
+            <xs:enumeration value="Disabled"/>
+            <xs:enumeration value="Expired"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_OrderDprt">
+        <xs:annotation>
+            <xs:appinfo>Max length is 32 chars</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_PostalCode">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_RegNumber">
+        <xs:annotation>
+            <xs:appinfo>Max length is 64 chars</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ApplRegNumber">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="64"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Relation">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_RequestCategory">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Q"/>
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="J"/>
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="O"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value=""/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_RqRs">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Rq"/>
+            <xs:enumeration value="Rs"/>
+            <xs:enumeration value="Notif"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_SearchType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ContractBase"/>
+            <xs:enumeration value="CBSNumber"/>
+            <xs:enumeration value="Custom"/>
+            <xs:enumeration value="AlternativeID"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_ServiceClass">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="T"/>
+            <xs:enumeration value="M"/>
+            <xs:enumeration value="I"/>
+            <xs:enumeration value="U"/>
+            <xs:enumeration value="L"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value="S"/>
+            <xs:enumeration value="E"/>
+            <xs:enumeration value="i"/>
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="p"/>
+            <xs:enumeration value="d"/>
+            <xs:enumeration value="u"/>
+            <xs:enumeration value="r"/>
+            <xs:enumeration value="l"/>
+            <xs:enumeration value="c"/>
+            <xs:enumeration value="X"/>
+            <xs:enumeration value="+"/>
+            <xs:enumeration value="V"/>
+            <xs:enumeration value=""/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_SIC">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_String">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Tag">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Time">
+        <xs:annotation>
+            <xs:appinfo>The format is "HH:MI:SS"</xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:time"/>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Version">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d+(\.\d+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_YesNo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Yes"/>
+            <xs:enumeration value="No"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="W4D_Text">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="3900"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="W4C_AccountInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="AccountType" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_AddInfo">
+        <xs:sequence>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Address">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Address type code. Codes are defined in
+the "Full \ Configuration Setup \ Client Classifiers \ Address Types" table.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="UseAddress" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Address type code of Address which should be used instead of the original Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DeliveryType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Delivery type code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrderDprt" type="W4D_OrderDprt">
+                <xs:annotation>
+                    <xs:appinfo>Bank department accepting the application</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Title" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Target's salutation. Codes are defined in the
+                        "Full \ Configuration Setup \ Client
+                        Classifiers \ Client Salutations" table. Max length is 32 chars.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="FirstName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Target's first name</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LastName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Target's last name</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="BirthName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Target's birth name</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Suffix" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Target's name suffix</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Language" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Three-symbol alphabetical ISO-639
+language code. Codes are defined in the
+"Code" field of the "Full \ Configuration
+Setup \ Client Classifiers \ Languages"
+table.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PhoneList" type="W4C_PhoneList">
+                <xs:annotation>
+                    <xs:appinfo>Client telephones numbers</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="EMail" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>E-mail address</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="URL" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>URL. Reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Country" type="W4D_Country">
+                <xs:annotation>
+                    <xs:appinfo>Three-symbol alphabetical ISO-3166
+country code. Codes are defined in the
+"Code (3 Bytes)" field of the "Full \
+Configuration Setup \ Main Tables \
+Country Table" table.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="State" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>State or Province. Reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="City" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>City</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PostalCode" type="W4D_PostalCode">
+                <xs:annotation>
+                    <xs:appinfo>Postal code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="MunicipalityCode" type="W4D_PostalCode">
+                <xs:annotation>
+                    <xs:appinfo>Municipality code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLocation" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address Location</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine1" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 1</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine2" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 2</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine3" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 3</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine4" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 4</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4D_Text">
+                <xs:annotation>
+                    <xs:appinfo>
+                        Not supported in R1 applications
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ActivityPeriod" type="W4C_DateInterval">
+                <xs:annotation>
+                    <xs:appinfo>Address activity period</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Affiliation">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Type" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Affiliation type between clients</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Code" type="W4D_Code"/>
+            <xs:choice maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="Client" type="W4C_ClientIDT">
+                    <xs:annotation>
+                        <xs:appinfo>Identifiers of existing client</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="NewClient" type="W4O_Client">
+                    <xs:annotation>
+                        <xs:appinfo>New client to be created;
+                            Not supported in R1 applications
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="UseForSubs" type="W4D_YesNo"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="CommentText" type="W4D_Text">
+                <xs:annotation>
+                    <xs:appinfo>Affiliation comment;
+                        Not supported in R1 applications
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ActivityPeriod">
+                <xs:annotation>
+                    <xs:appinfo>Reserved for future use</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="W4C_DateInterval">
+                            <xs:sequence>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>The initial date of the activity period</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element maxOccurs="1" minOccurs="0" name="DateTo" type="W4D_Date">
+                                    <xs:annotation>
+                                        <xs:appinfo>The ending date of the activity period, inclusive</xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Any">
+        <xs:sequence>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Balance">
+        <xs:sequence>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Name" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo> Balance type description</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Deprecated</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="Type" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Balance type code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo> Balance Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency">
+                <xs:annotation>
+                    <xs:appinfo> Balance currency</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_BalanceList">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Balance" type="W4C_Balance">
+                <xs:annotation>
+                    <xs:appinfo> Contract's Balance</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_BankAccountDetails">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="InstContractNumber" type="W4D_Code"/>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" name="InstitutionIdType" type="W4D_Code">
+                        <xs:annotation>
+                            <xs:appinfo>Type of Institution identification. It is used to define type of code shown in followed Institution element. Supported values: 
+'Branch' - Branch Code
+'CB' - CB Code
+'Bank' - Bank Code
+'RID' - Receiving Institution Identifier
+'BIN' - Bank identification number
+'BIC' - RBS Bank Identification Code
+</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Institution" type="W4D_MemberID"/>
+                </xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="0" name="RefSet" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Information. Pram/ParmType is reserved for future use</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="InstName" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="InstLoroId" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="InstBranch" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>
+                        Not supported in R1 applications
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrderDprt" type="W4D_Code"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrderDprtName" type="W4D_Name"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateOpen" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>
+                        Not supported in R1 applications
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Address" type="W4C_Address">
+                <xs:annotation>
+                    <xs:appinfo>Bank address information. It can be present as in local language as in English. Following fields are supported in local language (Language != "ENG"): Country, AddressZip, City, AddressLocation, AddressLine1, AddressLine2, AddressLine3, AddressLine4, and MunicipalityCode. Following fields are supported in English (Language = "ENG"): City, AddressLine1, AddressLine2, AddressLine3, and AddressLine4</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                <xs:annotation>
+                    <xs:appinfo>Additional client information;
+                        Not supported in R1 applications
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_CardDetails">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="CardExpiry" type="W4D_CardExpire">
+                <xs:annotation>
+                    <xs:appinfo> Card Expiration Date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="CardSeqN" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Card Sequence number</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_CheckSum">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="BatchesCount" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:documentation>Count of batches in the File</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="RecsCount" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:documentation>Count of single items in the File</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="HashTotalAmount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:documentation>File total amount</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_ClientIDT">
+        <xs:complexContent>
+            <xs:extension base="W4O_Client">
+                <xs:choice>
+                    <xs:choice maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="1" name="RefContractNumber" type="W4D_ContractNumber">
+                            <xs:annotation>
+                                <xs:appinfo>Contract Number for client identification.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:element maxOccurs="1" minOccurs="1" name="RefRBSNumber" type="W4D_ContractNumber">
+                                <xs:annotation>
+                                    <xs:appinfo>RBS Contract Number for client
+identification.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="RefRBSMemberId" type="W4D_ContractNumber">
+                                <xs:annotation>
+                                    <xs:appinfo>RBS Contract Member ID</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:choice>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="1" name="CustomIDT" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Contract ID used in a custom search procedure</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CustomCode" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>This value is used to verify the correctness of search results where a custom procedure is used.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CustomIDType">
+                            <xs:annotation>
+                                <xs:appinfo>The type of Custom identification</xs:appinfo>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="1"/>
+                                    <xs:maxLength value="1"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_ContractBase">
+        <xs:complexContent>
+            <xs:restriction base="W4C_ContractRoot">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IDType" type="W4D_SearchType"/>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>W4 IDT</xs:documentation>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ContractNumber" type="W4D_ContractNumber">
+                            <xs:annotation>
+                                <xs:appinfo>Contract number</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Relation" type="W4D_Relation">
+                            <xs:annotation>
+                                <xs:appinfo>Code of type of relation between related
+contracts.
+Codes are defined in the Full \ Configuration
+Setup \ Accounting Setup \ Contract
+Relations table.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Ext IDT</xs:documentation>
+                        </xs:annotation>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>New</xs:documentation>
+                            </xs:annotation>
+                            <xs:element maxOccurs="1" minOccurs="0" name="CBSNumber" type="W4D_LongCode">
+                                <xs:annotation>
+                                    <xs:appinfo>Core-Banking System Contract number</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="CBSCode" type="W4D_MemberID">
+                                <xs:annotation>
+                                    <xs:appinfo>Core-Banking System Member Identifier</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:sequence maxOccurs="1" minOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>Deprecated</xs:documentation>
+                            </xs:annotation>
+                            <xs:element maxOccurs="1" minOccurs="0" name="RBSNumber" type="W4D_LongCode">
+                                <xs:annotation>
+                                    <xs:appinfo>Contract RBS number</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="RBSMemberID" type="W4D_MemberID">
+                                <xs:annotation>
+                                    <xs:appinfo>Deprecated</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:choice>
+                    <xs:element maxOccurs="1" minOccurs="0" name="IdentifierFor" type="W4C_IdentifierFor">
+                        <xs:annotation>
+                            <xs:appinfo>IdentifierFor aggregate specifies the actual object to be processed in request. Supported references are: 
+'Top' - Top Object in an Objects tree,
+'Main' - parent object for the object
+</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Client" type="W4C_ClientIDT"/>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="1" name="CustomIDT" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>The identification of a Customer applied to searches where a custom procedure is used.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CustomCode" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>This value is used to verify the correctness of search results where a custom procedure is used.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CustomIDType" type="W4D_Tag">
+                            <xs:annotation>
+                                <xs:appinfo>The type of Custom identification</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="InstInfo" type="W4C_BankAccountDetails"/>
+                    <xs:sequence maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="0" name="AlternativeIDType" type="W4D_Code"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="AlternativeID" type="W4D_Name"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="AlternativeIDExtension" type="W4D_Name"/>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MemberId" type="W4D_MemberID">
+                            <xs:annotation>
+                                <xs:appinfo>Member ID.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_Contractor">
+        <xs:complexContent>
+            <xs:extension base="W4C_ContractRoot">
+                <xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:sequence maxOccurs="1" minOccurs="0">
+                            <xs:element maxOccurs="1" minOccurs="0" name="TransitId" type="W4D_MemberID">
+                                <xs:annotation>
+                                    <xs:appinfo> Contract transit identifier</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="TransitContractNumber" type="W4D_ContractNumber">
+                                <xs:annotation>
+                                    <xs:appinfo> Contract transit identifier</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="TransitInstInfo" type="W4C_BankAccountDetails"/>
+                        </xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="Address" type="W4C_Address">
+                            <xs:annotation>
+                                <xs:appinfo>Address data</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:choice maxOccurs="1" minOccurs="0">
+                            <xs:element maxOccurs="1" minOccurs="0" name="CardInfo" type="W4C_CardDetails">
+                                <xs:annotation>
+                                    <xs:appinfo> Card contract Information</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="DeviceInfo" type="W4C_DeviceInfoDetails">
+                                <xs:annotation>
+                                    <xs:appinfo> Reserved for future use</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:choice>
+                        <xs:element maxOccurs="1" minOccurs="0" name="AccountInfo" type="W4C_AccountInfo">
+                            <xs:annotation>
+                                <xs:appinfo> Reserved for future use</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:sequence maxOccurs="1" minOccurs="0">
+                            <xs:element maxOccurs="1" minOccurs="1" name="SecurityData" type="W4C_SecurityData">
+                                <xs:annotation>
+                                    <xs:appinfo>Security Data</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet">
+                            <xs:annotation>
+                                <xs:appinfo>Additional Information. Parm/ParmType is reserved for future use</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ProductInfo</xs:documentation>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Product">
+                            <xs:complexType>
+                                <xs:complexContent>
+                                    <xs:extension base="W4C_Product">
+                                        <xs:sequence>
+                                            <xs:element maxOccurs="1" minOccurs="0" name="Channel" type="W4D_Code">
+                                                <xs:annotation>
+                                                    <xs:appinfo>Channel</xs:appinfo>
+                                                </xs:annotation>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:extension>
+                                </xs:complexContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Customer" type="W4P_Customer">
+                        <xs:annotation>
+                            <xs:appinfo>Customer identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="AffiliatedSystem" type="W4C_AffiliatedSystemIDT">
+                        <xs:annotation>
+                            <xs:appinfo>Affiliated system where the contract originates from</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_ContractRoot">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="IDType" type="W4D_SearchType"/>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>W4 IDT</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="ContractNumber" type="W4D_ContractNumber">
+                    <xs:annotation>
+                        <xs:appinfo>Contract number</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="Relation" type="W4D_Relation">
+                    <xs:annotation>
+                        <xs:appinfo>Code of type of relation between related
+contracts.
+Codes are defined in the Full \ Configuration
+Setup \ Accounting Setup \ Contract
+Relations table.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Ext IDT</xs:documentation>
+                </xs:annotation>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>New</xs:documentation>
+                    </xs:annotation>
+                    <xs:element maxOccurs="1" minOccurs="0" name="CBSNumber" type="W4D_LongCode">
+                        <xs:annotation>
+                            <xs:appinfo>Core-Banking System Contract number</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="CBSCode" type="W4D_MemberID">
+                        <xs:annotation>
+                            <xs:appinfo>Core-Banking System Member Identifier</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Deprecated</xs:documentation>
+                    </xs:annotation>
+                    <xs:element maxOccurs="1" minOccurs="0" name="RBSNumber" type="W4D_LongCode">
+                        <xs:annotation>
+                            <xs:appinfo>Contract RBS number</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="RBSMemberID" type="W4D_MemberID">
+                        <xs:annotation>
+                            <xs:appinfo>Deprecated</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:choice>
+            <xs:element maxOccurs="1" minOccurs="0" name="IdentifierFor" type="W4C_IdentifierFor">
+                <xs:annotation>
+                    <xs:appinfo>IdentifierFor aggregate specifies the actual object to be processed in request. Supported references are: 
+'Top' - Top Object in an Objects tree,
+'Main' - parent object for the object
+</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Client" type="W4C_ClientIDT"/>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="CustomIDT" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>The identification of a Customer applied to searches where a custom procedure is used.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="CustomCode" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo>This value is used to verify the correctness of search results where a custom procedure is used.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="CustomIDType" type="W4D_Tag">
+                    <xs:annotation>
+                        <xs:appinfo>The type of Custom identification</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="InstInfo" type="W4C_BankAccountDetails"/>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="AlternativeIDType" type="W4D_Code"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="AlternativeID" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="AlternativeIDExtension" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="MemberId" type="W4D_MemberID">
+                    <xs:annotation>
+                        <xs:appinfo>Member ID.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_CurrencyAmount">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount">
+                <xs:annotation>
+                    <xs:appinfo>Amount</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Currency" type="W4D_Currency">
+                <xs:annotation>
+                    <xs:appinfo>ISO-4217 currency code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_DateInterval">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Activation" type="W4D_Activation">
+                <xs:annotation>
+                    <xs:appinfo>Temporary activation flag:
+"Activate"  activate
+"Deactivate"  deactivate.
+The element is not applicable in a BaseAddress. </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>The initial date of the activity period. The element is not applicable in a BaseAddress. </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateTo" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>The ending date of the activity period, inclusive. The element is not applicable in a BaseAddress. </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_DateTimeInterval">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Activation" type="W4D_Activation">
+                <xs:annotation>
+                    <xs:appinfo>Temporary activation flag:
+"Activate"  activate
+"Deactivate"  deactivate.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_DateTime">
+                <xs:annotation>
+                    <xs:appinfo>The initial date of the activity period</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateTo" type="W4D_DateTime">
+                <xs:annotation>
+                    <xs:appinfo>The ending date of the activity period, inclusive</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_DeviceInfoDetails">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="CycleNumber" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Number of Device Cycle.  For details see OpenWay manual: ATM Cycle or POS Cycle</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_DeviceTransDetails">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="SIC" type="W4D_SIC">
+                <xs:annotation>
+                    <xs:appinfo>Merchant SIC/MCC</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Country" type="W4D_Country">
+                <xs:annotation>
+                    <xs:appinfo>Three-symbol alphabetical ISO-3166
+country code. Codes are defined in the
+"Code (3 Bytes)" field in the "Full\
+Configuration Setup\ Main Tables\
+Country Table" form.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="State" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's state</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="City" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's city</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Location" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's location</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="MerchantName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's name</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="MerchantID" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's Identifier</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AssignedID" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's ID in MasterCard</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="WEBSite" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's Web site</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PostalCode" type="W4D_PostalCode">
+                <xs:annotation>
+                    <xs:appinfo>Merchant's Postal code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DocParm" type="W4C_Parm">
+                <xs:annotation>
+                    <xs:appinfo>Doc tag</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                    <xs:annotation>
+                        <xs:appinfo>Additional information. Definded element names: EMail, PhoneList of W4C_PhoneList</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Data. Following codes are supported:  "DEV", "MPD", "VPD" - acquiring side data specific for payment system("MPD", "VPD" ) and common("DEV"). Parm/ParmType is reserved for future use</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_EmbossingDetails">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Title" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Client title for embossing. Client title codes are
+defined in the "Full \ Configuration
+Setup \ Client Classifiers \ Client Titles" table.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="FirstName" type="W4D_Embossing">
+                <xs:annotation>
+                    <xs:appinfo>Client's first name for embossing</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LastName" type="W4D_Embossing">
+                <xs:annotation>
+                    <xs:appinfo>Client's last name for embossing</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="CompanyName" type="W4D_Embossing">
+                <xs:annotation>
+                    <xs:appinfo>Company name for embossing</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Filter">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_FilterType"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+            <xs:choice maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="Parms" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="1" name="ParmsInfo" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Information. Pram/ParmType is reserved for future use</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_IdentifierFor">
+        <xs:choice>
+            <xs:element maxOccurs="1" minOccurs="1" name="Top" type="W4D_YesNo">
+                <xs:annotation>
+                    <xs:appinfo>Reference to a Top Object in an Objects tree
+</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="Main" type="W4D_YesNo">
+                <xs:annotation>
+                    <xs:appinfo>Reference to a parent object for the object
+</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="0" minOccurs="0" name="ProductDefined" type="W4C_Product">
+                <xs:annotation>
+                    <xs:appinfo>Reserved for future use.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="W4C_Parm">
+        <xs:complexContent>
+            <xs:restriction base="W4C_ParmBase">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="ParmType" type="W4C_ParmType"/>
+                    <xs:element maxOccurs="1" minOccurs="1" name="ParmCode" type="W4D_Code">
+                        <xs:annotation>
+                            <xs:appinfo> Parameter Code</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_Name">
+                        <xs:annotation>
+                            <xs:appinfo>Parameter Value. If correspondent parameter is of date format, the value should be formatted: 'YYYY-MM-DD'. Special length limitation for Application/Data/Preferred/ContraDetails/AddData is 3000 chars for all aggregate. I.e. this is no limitation for the Value in that case.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_ParmBase">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="ParmType" type="W4C_ParmType">
+                <xs:annotation>
+                    <xs:appinfo>Parameter Type. Following values are supported: 'Tag' - for full tags in format: "TAG=VALUE;"; 'Flag' for tags without value in format: 'FLAG;'</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="ParmCode" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Parameter Code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Value" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Parameter Value. If correspondent parameter is of date format, the value should be formatted: 'YYYY-MM-DD'.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_ParmSet">
+        <xs:complexContent>
+            <xs:restriction base="W4C_ParmSetFree">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="Parm" type="W4C_Parm">
+                        <xs:annotation>
+                            <xs:appinfo> List of parameters</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_ParmSetFree">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Parm" type="W4C_Parm">
+                <xs:annotation>
+                    <xs:appinfo> List of parameters</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Phone">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="PhoneType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Phone type:
+"Home";
+"Mobile";
+"Work";
+"Fax";
+"HomeFax".</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="PhoneNumber" type="W4D_PhoneNumber">
+                <xs:annotation>
+                    <xs:appinfo>Phone number. Max length is 32 chars.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_PhoneList">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Phone" type="W4C_Phone">
+                <xs:annotation>
+                    <xs:appinfo>List of phone numbers</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Product">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Inward / Outward</xs:documentation>
+                </xs:annotation>
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:appinfo>Product IDT</xs:appinfo>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ProductCode1" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Product code 1. Codes are defined in the
+CODE field of the APPL_PRODUCT table.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ProductCode2" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Product code 2. Codes are defined in the
+CODE_2 field of the APPL_PRODUCT
+table.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ProductCode3" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Product code 3. Codes are defined in the
+CODE_3 field of the APPL_PRODUCT
+table.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence maxOccurs="1" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="0" name="AccountScheme" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Accounting scheme for product.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ContractType" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Reserved for future use.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ContractSubType" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Contract subtype.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ServicePack" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Product service package.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CheckAvailable" type="W4D_CheckAvailable">
+                            <xs:annotation>
+                                <xs:appinfo>Check available mode. Following values are supported: 'Check', 'NoCheck', 'SeeMain', 'BillingLimit'</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CheckUsage" type="W4D_CheckUsage">
+                            <xs:annotation>
+                                <xs:appinfo>Check usage mode. Following values are supported: 'MainAndOwn', 'OwnOnly'</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:choice maxOccurs="1" minOccurs="0">
+                            <xs:element maxOccurs="1" minOccurs="0" name="Relation" type="W4D_Code">
+                                <xs:annotation>
+                                    <xs:appinfo>Contracts relation.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="IsApplet" type="W4D_YesNo">
+                                <xs:annotation>
+                                    <xs:appinfo>Reserved for future use.</xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:sequence>
+                </xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="0" name="ReportType" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Report type code.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Outward</xs:documentation>
+                </xs:annotation>
+                <xs:element maxOccurs="1" minOccurs="0" name="ProductName" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="ContractRole" type="W4D_Name"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_ParmSet">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Information. Pram/ParmType is reserved for future use</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_RefSet">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Ref" type="W4C_RefType">
+                <xs:annotation>
+                    <xs:appinfo>Reference</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_ResultDtls">
+        <xs:complexContent>
+            <xs:extension base="W4C_ParmSetFree">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Filter" type="W4C_Filter"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_SearchInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_SearchType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_SecurityData">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="SecParm" type="W4D_SecParm">
+                <xs:annotation>
+                    <xs:appinfo>Security Parameters.  Supported types: PIN, PIN2, CVV2, TRCK1, TRCK2, UCAF - Universal Cardholder Authentication Field(MasterCard), UCAF_Collection_Indicator - Universal Cardholder Authentication Field Collection Indicator</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_Status">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="RespClass" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Response Class: Error. Information, Warning</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="RespCode" type="W4D_Counter">
+                <xs:annotation>
+                    <xs:appinfo> Response code. See specification for details</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="RespText" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo> Response message</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="RespAppId" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_StatusAmndInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="CurrentStageCode" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_TimeInterval">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="TimeFrom" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> The initial time of the time interval</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="TimeTo" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> The ending time of the time interval</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_TransRules">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="TransRule" type="W4C_ParmBase"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4D_SecParm">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo> Parameter Code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="Value" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo> Parameter Value</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_Code">
+                        <xs:annotation>
+                            <xs:appinfo>Parameter Type</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="Length" type="W4D_Counter">
+                        <xs:annotation>
+                            <xs:appinfo>Parameter value length</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="HexData" type="W4D_String">
+                        <xs:annotation>
+                            <xs:appinfo>Parameter Value</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_Extra">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Type" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Type of Extra information.  Supported values: 
+AddInfo - additional informaion; 
+CustomAddInfo - Custom data in tag-value format;
+CustomData - Custom Data in Bertlv format; 
+SrcFee - Source Fee; 
+TgtFee - Target Fee;
+Fee - Fee;
+CustomFee - Custom Fee; 
+Surcharge - Fee charged by merchant for the operation
+SrcTrn - Source Amount; 
+TgtTrn  - Target Amount; 
+Auth  - Authorization (blocked) Amount; 
+PaymentProperties - additional properties of a payment;
+OriginalData - original interchange file data;
+SrcAddFee - Additional Source Contract Fee linked to service and filtered by pipe parameter CUSTOM_FEE_CODES;
+ExtOperationDtls - Extended details of operation;
+TgtAddFee - Additional Target Contract Fee linked to service and filtered by pipe parameter CUSTOM_FEE_CODES.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="SubType" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>SubType of Extra information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="0" name="Currency" type="W4D_Currency">
+                    <xs:annotation>
+                        <xs:appinfo> Currency</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Amount" type="W4D_Amount">
+                    <xs:annotation>
+                        <xs:appinfo> Amount</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:choice maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Details" type="W4D_Name">
+                    <xs:annotation>
+                        <xs:appinfo> Additional Details</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddData" type="W4C_ParmSet"/>
+                <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                    <xs:annotation>
+                        <xs:appinfo>Additional Information</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4DC_Status">
+        <xs:complexContent>
+            <xs:extension base="W4C_ApplicationStatus">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="AmndInfo" type="W4C_StatusAmndInfo">
+                        <xs:annotation>
+                            <xs:appinfo>Amendment Information about the object. It can be used for a Doc and an Application only</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="TransitStatuses">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="1" name="Status" type="W4C_Status"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4O_Client">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="0" name="Institution" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>ID of the financial institution the request is addressed to. Codes are defined in the "Branch
+Code" field of the "Financial Institutions" table
+(Full \ Configuration Setup \ Main Tables \
+Financial Institutions).</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="InstitutionIDType" type="W4C_InstitutionIDType">
+                    <xs:annotation>
+                        <xs:appinfo> Type of financial institution identification. Possible values: "Branch" - identification by Branch_Code; "Bank"- identification by Bank_Code; "CB" - identification by CB_Code</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="OrderDprt" type="W4D_OrderDprt">
+                    <xs:annotation>
+                        <xs:appinfo>Bank department accepting the application.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ClientType" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Client type code</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ClientCategory" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Client category. Supported values: Private, Commercial, Accountant.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="ServiceGroup" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>Client service group code</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="ClientInfo">
+                <xs:annotation>
+                    <xs:appinfo>Client information data</xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ClientNumber" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Client number</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RegNumberType" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Client registration number type (passport
+number or corporate registration number)</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RegNumber" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Client registration number (passport
+number or corporate registration number)</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="RegNumberDetails" type="W4D_Comment">
+                            <xs:annotation>
+                                <xs:appinfo>Additional client properties, e.g. the place and date of passport issuance. Max length is 255 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="SocialNumber" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Client social security number</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="ShortName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Client's short name.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="TaxpayerIdentifier" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Taxpayer Identifier</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="TaxPosition" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Tax Position</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Title" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Client salutation. Codes are defined in the
+"Full \ Configuration Setup \ Client
+Classifiers \ Client Salutations" table. Max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="FirstName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>For companies: contact person's first name, for individuals: first name. Max length is 255 chars, since WAY4Cards version 03_31. If an older WAY4Cards is used, max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="LastName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>For companies: contact person's last name, for individuals: last name. Max length is 255 chars, since WAY4Cards version 03_31. If an older WAY4Cards is used, max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MiddleName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>For companies: contact person's middle name, for individuals: middle name. Max length is 255 chars, since WAY4Cards version 03_31. If an older WAY4Cards is used, max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Suffix" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Client name suffix</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="SecurityName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Secret word used to identify the client. Max length is 255 chars, since WAY4Cards version 03_31. If an older WAY4Cards is used, max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Country" type="W4D_Country">
+                            <xs:annotation>
+                                <xs:appinfo>Three-symbol alphabetical
+country code. Codes are defined in the
+"Code (3 Byte)" field of the "Full \
+Configuration Setup \ Main Tables \
+Country Table" form.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Citizenship" type="W4D_Country">
+                            <xs:annotation>
+                                <xs:appinfo>Three-symbol alphabetical ISO-3166
+country code. Codes are defined in the
+"Code (3 Bytes)" field in the "Full\
+Configuration Setup\ Main Tables\
+Country Table" form.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Language" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Three-symbol ISO-639 client character code. Codes are defined in the "Code" field of
+the "Full \ Configuration Setup \
+Client Classifiers \ Languages" table.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="MaritalStatus" type="W4D_Code">
+                            <xs:annotation>
+                                <xs:appinfo>Marital status. Codes are defined in the
+"Full \ Configuration Setup \ Client
+Classifiers \ Marital statuses" table. Max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Position" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Client's (or contact person's) profession. Max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CompanyName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Company name (for legal persons)</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CompanyTradeName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Company trade name (for legal persons)</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="CompanyDepartment" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    Not supported in R1 applications
+                                </xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="BirthDate" type="W4D_Date">
+                            <xs:annotation>
+                                <xs:appinfo>Client's birth date</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="BirthPlace" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Client's birthplace. Max length is 255 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="BirthName" type="W4D_Name">
+                            <xs:annotation>
+                                <xs:appinfo>Client's birth name. Max length is 255 chars, since WAY4Cards version 03_31. If an older WAY4Cards is used, max length is 32 chars.</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="Gender" type="W4D_Gender">
+                            <xs:annotation>
+                                <xs:appinfo>Client's gender. The following values are supported:
+"Male",
+"Female",
+"Not specified".</xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PlasticInfo" type="W4C_EmbossingDetails">
+                <xs:annotation>
+                    <xs:appinfo>Client embossing data</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PhoneList" type="W4C_PhoneList">
+                <xs:annotation>
+                    <xs:appinfo>Client telephones numbers</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Affiliation" type="W4C_Affiliation">
+                <xs:annotation>
+                    <xs:appinfo>Affiliated client data</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateOpen" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Client registration date</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DateExpiry" type="W4D_Date">
+                <xs:annotation>
+                    <xs:appinfo>Reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="BaseAddress" type="W4C_ClientBaseAddress">
+                <xs:annotation>
+                    <xs:appinfo>Main client address (data is entered into the
+"Client" table)</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddInfo" type="W4C_AddInfo">
+                <xs:annotation>
+                    <xs:appinfo>Additional client information</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_ClientBaseAddress">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="UseAddress" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="DeliveryType" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Delivery type code.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrderDprt" type="W4D_OrderDprt">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="FirstName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="LastName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="BirthName" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Language" type="W4D_Code">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PhoneList" type="W4C_PhoneList">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="EMail" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>E-mail address</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="URL" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>URL. Reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Country" type="W4D_Country">
+                <xs:annotation>
+                    <xs:appinfo>Three-symbol alphabetical ISO-3166
+country code. Codes are defined in the
+"Code (3 Bytes)" field of the "Full \
+Configuration Setup \ Main Tables \
+Country Table" table. 
+
+If specified overrides the value 
+Application\Data\Client\Country.
+</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="State" type="W4D_String">
+                <xs:annotation>
+                    <xs:appinfo>State or Province. Reserved for future use</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="City" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>City</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="PostalCode" type="W4D_PostalCode">
+                <xs:annotation>
+                    <xs:appinfo>Postal code</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="MunicipalityCode" type="W4D_PostalCode">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLocation" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine1" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 1</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine2" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 2</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine3" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 3</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddressLine4" type="W4D_Comment">
+                <xs:annotation>
+                    <xs:appinfo>Address, line No. 4</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="ActivityPeriod" type="W4C_DateInterval">
+                <xs:annotation>
+                    <xs:appinfo>Deprecated, not applicable to Client Base Address.</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_ApplicationStatus">
+        <xs:complexContent>
+            <xs:extension base="W4C_Status">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="PostingStatus" type="W4D_Code">
+                        <xs:annotation>
+                            <xs:appinfo>Posting status. Following values are supported:"Waiting", "Posted", "Rejected", and "Under Workflow"</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4P_Customer">
+        <xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element maxOccurs="1" minOccurs="1" name="CustomerIDT" type="W4D_Code">
+                    <xs:annotation>
+                        <xs:appinfo>The identification of a Customer applied to searches where a custom procedure is used.</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="0" name="CustomerIDType" type="W4D_String">
+                    <xs:annotation>
+                        <xs:appinfo>The type of Custom identification</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence maxOccurs="1" minOccurs="0">
+                <xs:element maxOccurs="1" minOccurs="1" name="SecurityData" type="W4C_SecurityData">
+                    <xs:annotation>
+                        <xs:appinfo>Security Data</xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_ApplStatus">
+        <xs:complexContent>
+            <xs:extension base="W4C_ApplicationStatus">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="AmndInfo" type="W4C_AmndInfo">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                Not supported in R1 applications
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="W4C_AmndInfo">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="OfficerIDT" type="W4D_Name">
+                <xs:annotation>
+                    <xs:appinfo>ID of the Officer who changed the object</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="AmndDate" type="W4D_DateTime">
+                <xs:annotation>
+                    <xs:appinfo> Date when the Object was last changed</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="IsReady" type="W4D_Tag">
+                <xs:annotation>
+                    <xs:appinfo> Current IsReady Status of the Object</xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_AffiliatedSystemIDT">
+        <xs:annotation>
+            <xs:appinfo>Affiliated system identifier</xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Code" type="W4D_Code"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="W4C_DateIntervalWithoutActivation">
+        <xs:complexContent>
+            <xs:restriction base="W4C_DateInterval">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DateFrom" type="W4D_Date">
+                        <xs:annotation>
+                            <xs:appinfo>The initial date of the activity period.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" name="DateTo" type="W4D_Date">
+                        <xs:annotation>
+                            <xs:appinfo>The ending date of the activity period, inclusive.</xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
