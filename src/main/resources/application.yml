@@ -1,27 +1,27 @@
 server:
-  port: ${SERVICE_PORT}
+  port: ${SERVICE_PORT:8080}
 
 eureka:
   client:
-    enabled: ${EUREKA_CLIENT_ENABLED}
-    registerWithEureka: ${EUREKA_CLIENT_ENABLED}
+    enabled: ${EUREKA_CLIENT_ENABLED:false}
+    registerWithEureka: ${EUREKA_CLIENT_ENABLED:false}
     serviceUrl:
-      defaultZone: ${EUREKA_URL}
+      defaultZone: ${EUREKA_URL:false}
   instance:
-    prefer-ip-address: ${EUREKA_PREFEREDIP_ENABLED}
+    prefer-ip-address: ${EUREKA_PREFEREDIP_ENABLED:true}
 
 spring:
   datasource:
-    driverClassName: ${DB_DRIVER}
-    url: ${DB_URL}
-    username: ${DB_LOGIN}
-    password: ${DB_PASSWORD}
+    driverClassName: ${DB_DRIVER:org.h2.Driver}
+    url: ${DB_URL:jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1}
+    username: ${DB_LOGIN:sa}
+    password: ${DB_PASSWORD:""}
 
     hikari:
-      connection-test-query: ${DB_TEST_QUERY}
+      connection-test-query: ${DB_TEST_QUERY:select 1}
 
   jpa:
-    database-platform: ${JPA_DIALECT}
+    database-platform: ${JPA_DIALECT:org.hibernate.dialect.H2Dialect}
     show-sql: true
     generate-ddl: false
     hibernate:
